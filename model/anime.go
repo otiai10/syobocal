@@ -1,5 +1,5 @@
 package model
 
 type Anime struct {
-    Title string;
+	Title string
 }
