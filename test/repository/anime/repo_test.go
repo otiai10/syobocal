@@ -12,7 +12,7 @@ func TestFindById(t *testing.T) {
         It("should find anime by id", func() {
             animeRepo := repo.NewAnimeRepo()
             anime := animeRepo.FindById("1")
-            Expect(anime.Title).To(Equal, "いなり、こんこん、恋いろは。")
+            Expect(anime.Title).To(Equal, "凪のあすから")
         })
     })
 }
