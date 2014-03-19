@@ -6,9 +6,9 @@ import "database/sql"
 var Repo interface{}
 
 type RepoClient struct {
-    Db *infra.Db
+	Db *infra.Db
 }
 
-func (client RepoClient)FindOne(dsn, id string) *sql.Row {
-    return client.Db.FindOne(dsn, id)
+func (client RepoClient) FindOne(dsn, id string) *sql.Row {
+	return client.Db.FindOne(dsn, id)
 }
