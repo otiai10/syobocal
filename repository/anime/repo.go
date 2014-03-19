@@ -3,8 +3,7 @@ package repo
 import . "animapi/repository"
 import "animapi/model/anime"
 import "animapi/infrastructure/db"
-
-import "fmt"
+import "animapi/factory/anime"
 
 type AnimeRepo struct {
     client RepoClient
@@ -29,20 +28,9 @@ func AnimeRepoOf(client RepoClient) *AnimeRepo {
 }
 
 func (animeRepo *AnimeRepo)FindById(id string) *model.Anime {
-    // とりあえずハード
     row := animeRepo.client.FindOne(
         animeRepo.dsn,
         id,
     )
-    // {{{ TODO: Factoryを呼ぶ
-    var title string
-    _ = row.Scan(&id, &title)
-    fmt.Println(
-        id,
-        title,
-    )
-    // }}}
-    return &model.Anime{
-        title,
-    }
+    return factory.AnimeFromRecord(row)
 }
