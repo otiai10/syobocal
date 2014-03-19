@@ -9,7 +9,11 @@ import "database/sql"
  * 各モデルのコンストラクションに何が必要か
  * アプリケーションやレポジトリには見せない
  */
-func AnimeFromRecord(record *sql.Row) *model.Anime {
+type AnimeFactory struct {}
+func GetAnimeFactory() *AnimeFactory {
+    return &AnimeFactory{}
+}
+func (f *AnimeFactory) FromRecord(record *sql.Row) *model.Anime {
     var id, title string
     _ = record.Scan(&id, &title)
     return &model.Anime{

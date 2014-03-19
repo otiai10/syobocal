@@ -28,9 +28,10 @@ func AnimeRepoOf(client RepoClient) *AnimeRepo {
 }
 
 func (animeRepo *AnimeRepo)FindById(id string) *model.Anime {
-    row := animeRepo.client.FindOne(
+    record := animeRepo.client.FindOne(
         animeRepo.dsn,
         id,
     )
-    return factory.AnimeFromRecord(row)
+    animeFacotry := factory.GetAnimeFactory()
+    return animeFacotry.FromRecord(record)
 }
