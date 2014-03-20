@@ -69,13 +69,13 @@ func (db *Db) exec(query string) sql.Result {
 	fmt.Println("[exec]\t" + query)
 	return _res
 }
-func (db *Db)queryOne(query string) *sql.Row {
-    return db.mydb.QueryRow(query)
+func (db *Db) queryOne(query string) *sql.Row {
+	return db.mydb.QueryRow(query)
 }
 
 // こっから下はマジ
-func (db *Db)FindOne(tableName string, id string) *sql.Row {
+func (db *Db) FindOne(tableName string, id string) *sql.Row {
 	query := "SELECT * FROM " + tableName + "_" + db.shard + " WHERE id='" + id + "'"
-    _row := db.queryOne(query)
-    return _row
+	_row := db.queryOne(query)
+	return _row
 }

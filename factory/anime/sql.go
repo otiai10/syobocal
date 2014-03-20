@@ -2,6 +2,7 @@ package factory
 
 import "animapi/model/anime"
 import "database/sql"
+
 /**
  * ファクトリーは
  * モデルのコンストラクションの方法を隠蔽する
@@ -9,14 +10,15 @@ import "database/sql"
  * 各モデルのコンストラクションに何が必要か
  * アプリケーションやレポジトリには見せない
  */
-type AnimeFactory struct {}
+type AnimeFactory struct{}
+
 func GetAnimeFactory() *AnimeFactory {
-    return &AnimeFactory{}
+	return &AnimeFactory{}
 }
 func (f *AnimeFactory) FromRecord(record *sql.Row) *model.Anime {
-    var id, title string
-    _ = record.Scan(&id, &title)
-    return &model.Anime{
-        title,
-    }
+	var id, title string
+	_ = record.Scan(&id, &title)
+	return &model.Anime{
+		title,
+	}
 }

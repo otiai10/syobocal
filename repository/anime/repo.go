@@ -6,32 +6,32 @@ import "animapi/infrastructure/db"
 import "animapi/factory/anime"
 
 type AnimeRepo struct {
-    client RepoClient
-    dsn string
+	client RepoClient
+	dsn    string
 }
 
 func NewAnimeRepo() *AnimeRepo {
-    db := infra.GetDB("test", "000")
-    client := RepoClient{
-        Db: db,
-    }
-    return &AnimeRepo{
-        client: client,
-        dsn: "anime",
-    }
+	db := infra.GetDB("test", "000")
+	client := RepoClient{
+		Db: db,
+	}
+	return &AnimeRepo{
+		client: client,
+		dsn:    "anime",
+	}
 }
 func AnimeRepoOf(client RepoClient) *AnimeRepo {
-    return &AnimeRepo{
-        client: client,
-        dsn: "anime",
-    }
+	return &AnimeRepo{
+		client: client,
+		dsn:    "anime",
+	}
 }
 
-func (animeRepo *AnimeRepo)FindById(id string) *model.Anime {
-    record := animeRepo.client.FindOne(
-        animeRepo.dsn,
-        id,
-    )
-    animeFacotry := factory.GetAnimeFactory()
-    return animeFacotry.FromRecord(record)
+func (animeRepo *AnimeRepo) FindById(id string) *model.Anime {
+	record := animeRepo.client.FindOne(
+		animeRepo.dsn,
+		id,
+	)
+	animeFacotry := factory.GetAnimeFactory()
+	return animeFacotry.FromRecord(record)
 }
