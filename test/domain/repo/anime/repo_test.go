@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-import "animapi/domain/repository/anime"
+import "animapi/domain/repo/anime"
 
 func TestFindById(t *testing.T) {
 	Describe(t, "FindById", func() {

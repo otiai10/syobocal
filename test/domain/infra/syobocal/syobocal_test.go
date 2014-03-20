@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-import "animapi/domain/infrastructure/syobocal"
+import "animapi/domain/infra/syobocal"
 import (
 	"io/ioutil" // fixtureモジュールが必要かも
 )
