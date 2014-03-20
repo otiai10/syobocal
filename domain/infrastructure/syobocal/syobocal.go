@@ -5,7 +5,7 @@ import "net/http"
 import "io/ioutil"
 
 //とりあえずここで参照するけど、循環したら考える
-import "animapi/model/syobocal"
+import "animapi/domain/model/syobocal"
 
 // infra.SyobocalAPIはHTTPクライアントを所持してます
 type SyobocalAPI struct {

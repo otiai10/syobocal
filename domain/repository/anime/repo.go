@@ -1,9 +1,9 @@
 package repo
 
-import . "animapi/repository"
-import "animapi/model/anime"
-import "animapi/infrastructure/db"
-import "animapi/factory/anime"
+import . "animapi/domain/repository"
+import "animapi/domain/model/anime"
+import "animapi/domain/infrastructure/db"
+import "animapi/domain/factory/anime"
 
 type AnimeRepo struct {
 	client RepoClient

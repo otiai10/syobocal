@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-import "animapi/infrastructure/syobocal"
+import "animapi/domain/infrastructure/syobocal"
 import (
 	"io/ioutil" // fixtureモジュールが必要かも
 )
@@ -35,7 +35,7 @@ type DummyHTTPClient struct {
 
 func (client DummyHTTPClient) FindHoge() []byte {
 	var xml []byte
-	xml, e := ioutil.ReadFile("../../fixture/syobocal/syobocal.response.xml")
+	xml, e := ioutil.ReadFile("../../../fixture/syobocal/syobocal.response.xml")
 	if e != nil {
 		panic(e)
 	}

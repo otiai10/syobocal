@@ -1,6 +1,6 @@
 package factory
 
-import "animapi/model/anime"
+import "animapi/domain/model/anime"
 import "database/sql"
 
 /**
