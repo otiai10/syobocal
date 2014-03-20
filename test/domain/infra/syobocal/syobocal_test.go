@@ -17,8 +17,9 @@ func TestGetApi(t *testing.T) {
 			client := &infra.SyobocalDummyHTTPClient{}
 			api := infra.SyobocalApiOf(client)
 			res := api.RequestQuery("20140321", "20140324")
-			fmt.Printf("%T", res)
-			Expect(true).To(Equal, true)
+			// reflect使うまでもない
+			typeof := fmt.Sprintf("%T", res)
+			Expect(typeof).To(Equal, "model.SyobocalResponse")
 		})
 	})
 }
