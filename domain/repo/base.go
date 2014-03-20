@@ -14,10 +14,17 @@ import "database/sql"
 
 var Repo interface{}
 
+type IRepoClient interface {
+	FindOne(dsn, id string) *sql.Row
+	Query(query *SyobocalQuery) []byte
+}
 type RepoClient struct {
 	Db *infra.Db
 }
 
 func (client RepoClient) FindOne(dsn, id string) *sql.Row {
 	return client.Db.FindOne(dsn, id)
+}
+func (client RepoClient) Query(query *SyobocalQuery) (xml []byte) {
+	return
 }

@@ -4,8 +4,10 @@ import "animapi/domain/model/anime"
 import "animapi/domain/infra/db"
 import "animapi/domain/factory/anime"
 
+import "fmt"
+
 type AnimeRepo struct {
-	client RepoClient
+	client IRepoClient
 	dsn    string
 }
 
@@ -19,7 +21,7 @@ func NewAnimeRepo() *AnimeRepo {
 		dsn:    "anime",
 	}
 }
-func AnimeRepoOf(client RepoClient) *AnimeRepo {
+func AnimeRepoOf(client IRepoClient) *AnimeRepo {
 	return &AnimeRepo{
 		client: client,
 		dsn:    "anime",
@@ -33,4 +35,15 @@ func (animeRepo *AnimeRepo) FindById(id string) *model.Anime {
 	)
 	animeFacotry := factory.GetAnimeFactory()
 	return animeFacotry.FromRecord(record)
+}
+
+func (animeRepo *AnimeRepo) FindFromSyobocal(from string, to string) /* []*model.Anime */ {
+	query := &SyobocalQuery{
+		"TitleLookup",
+		from,
+		to,
+	}
+	var xml []byte
+	xml = animeRepo.client.Query(query)
+	fmt.Println(xml)
 }
