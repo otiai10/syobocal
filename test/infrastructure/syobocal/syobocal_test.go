@@ -7,17 +7,14 @@ import (
 
 import "animapi/infrastructure/syobocal"
 
+// インフラの挙動を定義するテストなので、
+// このテストはレポとして振る舞う
 func TestGetApi(t *testing.T) {
 	Describe(t, "Syobocal API", func() {
 		It("can find animes カッコカリ", func() {
-
 			api := infra.GetSyobocalAPI()
-            api.Hoge()
-/*
-			xml := api.FindAllAnime()
-
-            fmt.Printf("%T %+v", xml, xml)
-*/
+            // response := api.FindHoge()
+            _ = api.FindHoge()
 			Expect(true).To(Equal, true)
 		})
 	})

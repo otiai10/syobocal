@@ -3,35 +3,48 @@ package infra
 import "encoding/xml"
 import "net/http"
 import "io/ioutil"
-import "animapi/model/syobocal"//とりあえずここで参照するけど、循環したら考える
 
-import "fmt"
+//とりあえずここで参照するけど、循環したら考える
+import "animapi/model/syobocal"
 
-type SyobocalClient struct {
+// infra.SyobocalAPIはHTTPクライアントを所持してます
+type SyobocalAPI struct {
+    client SyobocalHTTPClient
+}
+type SyobocalHTTPClient struct {
     baseURL string
 }
 
-func GetSyobocalAPI() SyobocalClient {
-    return SyobocalClient{
-        baseURL: "http://cal.syoboi.jp/db.php",
+func GetSyobocalAPI() SyobocalAPI {
+    return SyobocalAPI{
+        SyobocalHTTPClient{
+            baseURL: "http://cal.syoboi.jp/db.php",
+        },
     }
 }
-func (c *SyobocalClient) Hoge() {
-    // TODO: エラーハンドリング雑だなー
-    url := c.baseURL + "?Command=TitleLookup&TID=*&LastUpdate=20140320_000000-"
-    resp, _ := http.Get(url)
-    body, _ := ioutil.ReadAll(resp.Body)
-    resp.Body.Close()
-    fmt.Println(
-        c.convert(body),
-    )
+func (api *SyobocalAPI) FindHoge() model.SyobocalResponse {
+    body := api.client.FindHoge()
+    return api.convert(body)
 }
 
-func (c *SyobocalClient)convert(responseBody []byte) model.SyobocalResponse {
+func (client *SyobocalHTTPClient) FindHoge() []byte {
+
+    url := client.baseURL + "?Command=TitleLookup&TID=*&LastUpdate=20140320_000000-"
+    resp, e := http.Get(url)
+    if e != nil { panic(e) }
+
+    body, e := ioutil.ReadAll(resp.Body)
+    if e != nil { panic(e) }
+
+    resp.Body.Close()
+    return body
+}
+func (api *SyobocalAPI)convert(responseBody []byte) model.SyobocalResponse {
+
     responseRoot := model.SyobocalResponse{}
+
     e := xml.Unmarshal(responseBody, &responseRoot)
-    if e != nil {
-         panic(e)
-    }
+    if e != nil { panic(e) }
+
     return responseRoot
 }
