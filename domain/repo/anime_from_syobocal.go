@@ -1,7 +1,7 @@
 package repo
 
 // import "animapi/domain/model/anime"
-import "animapi/domain/infra/syobocal"
+import "animapi/infrastructure/syobocal"
 
 // import "animapi/domain/factory/anime"
 import "io/ioutil"

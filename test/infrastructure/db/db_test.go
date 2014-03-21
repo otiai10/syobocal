@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-import "animapi/domain/infra/db"
+import "animapi/infrastructure/db"
 
 func TestGetDb(t *testing.T) {
 	Describe(t, "Db", func() {

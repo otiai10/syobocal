@@ -9,7 +9,7 @@ package repo
  * データベースからの返りが何か（factory）
  * 全く知らないように作る
  */
-import "animapi/domain/infra/db"
+import "animapi/infrastructure/db"
 import "database/sql"
 
 var Repo interface{}

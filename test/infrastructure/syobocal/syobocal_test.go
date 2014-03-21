@@ -7,7 +7,7 @@ import (
 )
 
 // Test this
-import "animapi/domain/infra/syobocal"
+import "animapi/infrastructure/syobocal"
 
 // インフラの挙動を定義するテストなので、
 // このテストはレポとして振る舞う

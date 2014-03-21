@@ -18,7 +18,7 @@ func (c *SyobocalDummyHTTPClient) ExecQuery(query SyobocalQuery) (xml []byte) {
 	// xml, e = ioutil.ReadAll(httpResponse.Body)
 	// if e != nil { panic(e) }
 	// httpResponse.Body.Close()
-	fixturePath := "../../../../test/fixture/syobocal/syobocal.response.xml"
+	fixturePath := "../../../test/fixture/syobocal/syobocal.response.xml"
 	xml, e := ioutil.ReadFile(fixturePath)
 	if e != nil {
 		panic(e)

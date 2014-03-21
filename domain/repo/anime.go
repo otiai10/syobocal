@@ -1,7 +1,7 @@
 package repo
 
 import "animapi/domain/model/anime"
-import "animapi/domain/infra/db"
+import "animapi/infrastructure/db"
 import "animapi/domain/factory/anime"
 
 import "fmt"
