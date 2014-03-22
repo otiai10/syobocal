@@ -16,13 +16,3 @@ func TestFindById(t *testing.T) {
 		})
 	})
 }
-
-func TestFindFromSyobocal(t *testing.T) {
-	Describe(t, "FindFromSyobocal", func() {
-		It("should find anime from syobocal with query", func() {
-			dummyClient := repo.DummyHTTPClient{}
-			animeRepo := repo.AnimeRepoOf(dummyClient)
-			animeRepo.FindFromSyobocal("20140320_000000", "")
-		})
-	})
-}
