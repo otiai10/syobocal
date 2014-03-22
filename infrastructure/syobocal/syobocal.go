@@ -1,9 +1,6 @@
-package infra
+package syobocal
 
 import "encoding/xml"
-
-//とりあえずここで参照するけど、循環したら考える
-import "animapi/domain/model/syobocal"
 
 // infra.SyobocalAPIはHTTPクライアントを所持してます
 type SyobocalAPI struct {
@@ -15,8 +12,14 @@ func SyobocalApiOf(client ISyobocalHTTPClient) SyobocalAPI {
 		client: client,
 	}
 }
-func (api *SyobocalAPI) convert(responseBody []byte) model.SyobocalResponse {
-	responseRoot := model.SyobocalResponse{}
+func GetAPI() SyobocalAPI {
+	client := &SyobocalHTTPClient{
+		baseURL: "http://cal.syoboi.jp/db.php",
+	}
+	return SyobocalAPI{client}
+}
+func (api *SyobocalAPI) convert(responseBody []byte) Response {
+	responseRoot := Response{}
 	e := xml.Unmarshal(responseBody, &responseRoot)
 	if e != nil {
 		panic(e)
@@ -24,7 +27,7 @@ func (api *SyobocalAPI) convert(responseBody []byte) model.SyobocalResponse {
 	return responseRoot
 }
 
-func (api *SyobocalAPI) RequestQuery(from, to string) model.SyobocalResponse {
+func (api *SyobocalAPI) RequestByRange(from, to string) Response {
 	query := SyobocalQuery{
 		Command: "TitleLookup",
 		From:    from,

@@ -9,15 +9,12 @@ import (
 // Test this
 import "animapi/infrastructure/syobocal"
 
-// インフラの挙動を定義するテストなので、
-// このテストはレポとして振る舞う
-func TestGetApi(t *testing.T) {
-	Describe(t, "RequestQuery", func() {
-		It("should find animes from syobocal by query", func() {
-			client := &infra.SyobocalDummyHTTPClient{}
-			api := infra.SyobocalApiOf(client)
-			res := api.RequestQuery("20140321", "20140324")
-			// reflect使うまでもない
+// 良い感じ 2014/03/22
+func TestRequestByRange(t *testing.T) {
+	Describe(t, "RequestByRange", func() {
+		It("should find animes by range", func() {
+			syobocal := syobocal.GetAPI()
+			res := syobocal.RequestByRange("20140322_214000", "")
 			typeof := fmt.Sprintf("%T", res)
 			Expect(typeof).To(Equal, "model.SyobocalResponse")
 		})
