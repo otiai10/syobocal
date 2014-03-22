@@ -16,7 +16,7 @@ func TestRequestByRange(t *testing.T) {
 			syobocal := syobocal.GetAPI()
 			res := syobocal.RequestByRange("20140322_214000", "")
 			typeof := fmt.Sprintf("%T", res)
-			Expect(typeof).To(Equal, "model.SyobocalResponse")
+			Expect(typeof).To(Equal, "syobocal.Response")
 		})
 	})
 }
