@@ -4,6 +4,7 @@ import (
 	"fmt"
 	. "github.com/r7kamura/gospel"
 	"testing"
+	"time"
 )
 
 // Test this
@@ -14,7 +15,10 @@ func TestRequestByRange(t *testing.T) {
 	Describe(t, "RequestByRange", func() {
 		It("should find animes by range", func() {
 			syobocal := syobocal.GetAPI()
-			res := syobocal.RequestByRange("20140322_214000", "")
+			dur, _ := time.ParseDuration("-3h")
+			from := time.Now().Add(dur)
+			to := time.Now()
+			res := syobocal.RequestByRange(from, to)
 			typeof := fmt.Sprintf("%T", res)
 			Expect(typeof).To(Equal, "syobocal.Response")
 		})

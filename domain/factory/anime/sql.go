@@ -19,6 +19,8 @@ func (f *AnimeFactory) FromRecord(record *sql.Row) *model.Anime {
 	var id, title string
 	_ = record.Scan(&id, &title)
 	return &model.Anime{
+		"0",
 		title,
+		"nil",
 	}
 }

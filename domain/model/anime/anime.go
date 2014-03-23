@@ -1,5 +1,7 @@
 package model
 
 type Anime struct {
-	Title string
+	TID     string
+	Title   string
+	Comment string
 }

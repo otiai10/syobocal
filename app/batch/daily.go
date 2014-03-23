@@ -19,10 +19,11 @@ func CrawlTodayAnime() bool {
 	animeFactory := factory.GetAnimeFactory()
 	animes := animeFactory.FromSyobocalResponse(res)
 
-	for k, v := range animes {
+	for i, anime := range animes {
 		fmt.Println(
-			k,
-			v.Title,
+			i,
+			anime.Title,
+			anime.TID,
 		)
 	}
 

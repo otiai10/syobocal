@@ -8,7 +8,7 @@ type Result struct {
 }
 type TitleItem struct {
 	XMLName    xml.Name `xml:"TitleItem"`
-	TID        int      `xml:"TID"`
+	TID        string   `xml:"TID"`
 	LastUpdate string   `xml:"LastUpdate"`
 	Title      string   `xml:"Title"`
 	ShortTitle string   `xml:"ShortTitle"`

@@ -19,6 +19,8 @@ func (f *AnimeFactory) FromSyobocalResponse(res syobocal.Response) []*model.Anim
 }
 func (f *AnimeFactory) item2anime(item syobocal.TitleItem) *model.Anime {
 	return &model.Anime{
-		Title: item.Title,
+		TID:     item.TID,
+		Title:   item.Title,
+		Comment: item.Comment,
 	}
 }
