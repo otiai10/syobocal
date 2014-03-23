@@ -50,7 +50,7 @@ func (db *Db) FindAllAnime() *sql.Rows {
 	return _rows
 }
 func (db *Db) InsertAnime() sql.Result {
-	q := "INSERT INTO anime_" + db.shard + " (title) VALUE ('凪のあすから')"
+	q := "INSERT INTO anime_" + db.shard + " (tid, title) VALUE (0, '凪のあすから')"
 	return db.exec(q)
 }
 func (db *Db) DropAnimeTable() sql.Result {
@@ -58,7 +58,7 @@ func (db *Db) DropAnimeTable() sql.Result {
 	return db.exec(q)
 }
 func (db *Db) CreateAnimeTable() sql.Result {
-	q := "CREATE TABLE IF NOT EXISTS anime_" + db.shard + " (id INTEGER UNIQUE AUTO_INCREMENT, title TEXT NOT NULL)"
+	q := "CREATE TABLE IF NOT EXISTS anime_" + db.shard + " (id INTEGER UNIQUE AUTO_INCREMENT, tid INT UNSIGNED NOT NULL DEFAULT 0, title TEXT NOT NULL, comment TEXT)"
 	return db.exec(q)
 }
 func (db *Db) exec(query string) sql.Result {
@@ -75,7 +75,7 @@ func (db *Db) queryOne(query string) *sql.Row {
 
 // こっから下はマジ
 func (db *Db) FindOne(tableName string, id string) *sql.Row {
-	query := "SELECT * FROM " + tableName + "_" + db.shard + " WHERE id='" + id + "'"
+	query := "SELECT id,title FROM " + tableName + "_" + db.shard + " WHERE id='" + id + "'"
 	_row := db.queryOne(query)
 	return _row
 }
