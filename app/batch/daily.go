@@ -3,8 +3,9 @@ package batch
 import "animapi/infrastructure/syobocal"
 import "animapi/domain/factory/anime"
 
+import "animapi/domain/repo"
+
 import "time"
-import "fmt"
 
 func CrawlTodayAnime() bool {
 	// syobocalからアニメを取得する
@@ -19,12 +20,9 @@ func CrawlTodayAnime() bool {
 	animeFactory := factory.GetAnimeFactory()
 	animes := animeFactory.FromSyobocalResponse(res)
 
-	for i, anime := range animes {
-		fmt.Println(
-			i,
-			anime.Title,
-			anime.TID,
-		)
+	animeRepo := repo.NewAnimeRepo()
+	for _, anime := range animes {
+		animeRepo.Save(anime)
 	}
 
 	return true

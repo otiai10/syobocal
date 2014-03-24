@@ -1,4 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><TitleLookupResponse><Result><Code>200</Code><Message></Message></Result><TitleItems><TitleItem id="3254"><TID>3254</TID><LastUpdate>2014-03-20 01:39:00</LastUpdate><Title>いなり、こんこん、恋いろは。</Title><ShortTitle></ShortTitle><TitleYomi>いなりこんこんこいいろは</TitleYomi><TitleEN></TitleEN><Comment>*リンク
+<?xml version="1.0" encoding="UTF-8"?>
+<TitleLookupResponse>
+    <Result>
+        <Code>200</Code>
+        <Message></Message>
+    </Result>
+    <TitleItems>
+        <TitleItem id="3254">
+            <TID>3254</TID>
+            <LastUpdate>2014-03-20 01:39:00</LastUpdate>
+            <Title>いなり、こんこん、恋いろは。</Title>
+            <ShortTitle></ShortTitle>
+            <TitleYomi>いなりこんこんこいいろは</TitleYomi>
+            <TitleEN></TitleEN>
+            <Comment>*リンク
 -[[公式 http://inarikonkon.jp/]]
 -[[TOKYO MX http://s.mxtv.jp/inarikonkon/]]
 -[[BS11デジタル http://www.bs11.jp/anime/2422/]]
@@ -69,7 +83,18 @@
 :出町柳一:三輪瑛
 :木幡先生:サエキトモ
 :神大市比売:真田アサミ
-:須佐之男:黒田崇矢</Comment><Cat>1</Cat><TitleFlag>0</TitleFlag><FirstYear>2014</FirstYear><FirstMonth>1</FirstMonth><FirstEndYear>2014</FirstEndYear><FirstEndMonth>3</FirstEndMonth><FirstCh>TOKYO MX</FirstCh><Keywords></Keywords><UserPoint>393</UserPoint><UserPointRank>10</UserPointRank><SubTitles>*01*いなり、初恋、初変化(へんげ)。
+:須佐之男:黒田崇矢</Comment>
+            <Cat>1</Cat>
+            <TitleFlag>0</TitleFlag>
+            <FirstYear>2014</FirstYear>
+            <FirstMonth>1</FirstMonth>
+            <FirstEndYear>2014</FirstEndYear>
+            <FirstEndMonth>3</FirstEndMonth>
+            <FirstCh>TOKYO MX</FirstCh>
+            <Keywords></Keywords>
+            <UserPoint>393</UserPoint>
+            <UserPointRank>10</UserPointRank>
+            <SubTitles>*01*いなり、初恋、初変化(へんげ)。
 *02*試練、ひめごと、天照。
 *03*兄じゃ、五月蠅い、過剰愛。
 *04*緋色、宵宮、恋模様。
@@ -78,7 +103,16 @@
 *07*おとめ、ときめく、あかね色。
 *08*出雲、お見合い、大騒ぎ。
 *09*きつね、黄昏、天の川。
-*10*いなり、こんこん、恋いろは。</SubTitles></TitleItem><TitleItem id="3279"><TID>3279</TID><LastUpdate>2014-03-20 04:59:35</LastUpdate><Title>うーさーのその日暮らし 覚醒編</Title><ShortTitle>うーさーのその日暮らし(2)</ShortTitle><TitleYomi>うーさーのそのひぐらしかくせいへん</TitleYomi><TitleEN>wooser's hand-to-mouth life</TitleEN><Comment>*リンク
+*10*いなり、こんこん、恋いろは。</SubTitles>
+        </TitleItem>
+        <TitleItem id="3279">
+            <TID>3279</TID>
+                <LastUpdate>2014-03-20 04:59:35</LastUpdate>
+                <Title>うーさーのその日暮らし 覚醒編</Title>
+                <ShortTitle>うーさーのその日暮らし(2)</ShortTitle>
+                <TitleYomi>うーさーのそのひぐらしかくせいへん</TitleYomi>
+                <TitleEN>wooser's hand-to-mouth life</TitleEN>
+                <Comment>*リンク
 -[[公式 http://wooser.tv/]]
 -[[テレビ東京 http://www.tv-tokyo.co.jp/anime/wooser/]]
 -[[ニコニコチャンネル http://ch.nicovideo.jp/wooser-tv-kakuse]]
@@ -104,7 +138,18 @@
 :りん:小澤みのり
 :れん:長宗春佳
 :ゆう:Tia
-:みほ:佐藤悠里</Comment><Cat>1</Cat><TitleFlag>0</TitleFlag><FirstYear>2014</FirstYear><FirstMonth>1</FirstMonth><FirstEndYear>2014</FirstEndYear><FirstEndMonth>3</FirstEndMonth><FirstCh>テレビ東京</FirstCh><Keywords>うーさーのその日暮らし</Keywords><UserPoint>143</UserPoint><UserPointRank>394</UserPointRank><SubTitles>*01*始動 ～とある日の風景、少女たちの日常、帰ってきたうーさー～
+:みほ:佐藤悠里</Comment>
+            <Cat>1</Cat>
+            <TitleFlag>0</TitleFlag>
+            <FirstYear>2014</FirstYear>
+            <FirstMonth>1</FirstMonth>
+            <FirstEndYear>2014</FirstEndYear>
+            <FirstEndMonth>3</FirstEndMonth>
+            <FirstCh>テレビ東京</FirstCh>
+            <Keywords>うーさーのその日暮らし</Keywords>
+            <UserPoint>143</UserPoint>
+            <UserPointRank>394</UserPointRank>
+            <SubTitles>*01*始動 ～とある日の風景、少女たちの日常、帰ってきたうーさー～
 *02*正義 ～孤独なる戦い、母に誓う勝利、引き分け狙いのうーさー～
 *03*王国 ～色あせた記録、色褪せぬ記憶、世界一かわいいうーさー～
 *04*進化 ～儚き夢の欠片、きらめく星の導き、我が道を行くうーさー～
@@ -115,4 +160,7 @@
 *09*追憶 ～本当の自分、向かい合うべき真実、目を逸らすうーさー～
 *10*因果 ～現れた最強の敵、抗えぬ過酷な運命、裁かれるうーさー～
 *11*希望 ～ラララララララララーラララー、ラララララララララーラララー～
-*12*覚醒 ～星空に描く愛、プレゼントはオレだ、ありがとううーさー～</SubTitles></TitleItem></TitleItems></TitleLookupResponse>
+*12*覚醒 ～星空に描く愛、プレゼントはオレだ、ありがとううーさー～</SubTitles>
+        </TitleItem>
+    </TitleItems>
+</TitleLookupResponse>

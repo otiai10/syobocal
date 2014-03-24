@@ -79,3 +79,11 @@ func (db *Db) FindOne(tableName string, id string) *sql.Row {
 	_row := db.queryOne(query)
 	return _row
 }
+
+func (db *Db) Insert(sql string) {
+	res, e := db.mydb.Exec(sql)
+	if e != nil {
+		panic(e)
+	}
+	fmt.Printf("%+v", res)
+}
