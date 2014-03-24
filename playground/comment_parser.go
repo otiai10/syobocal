@@ -5,28 +5,46 @@ import "fmt"
 import "strings"
 
 func main() {
-	re, err := regexp.Compile("[\n]{2}")
-	if err != nil {
-		panic(err)
-	}
+	re := regexp.MustCompile("[\n]{2}")
 	blocks := re.Split(getStr(), -1)
 	for _, block := range blocks {
-		h, v := extractHeaderAndValue(block)
+		h, _ := extractHeaderAndValue(block)
 		fmt.Println("HEAD\t" + h)
-		fmt.Println("VALUE\t" + v)
+		// fmt.Println("VALUE\t" + v)
+		if isSongHeader(h) {
+			fmt.Println("\t", getSongTitle(h))
+		}
 	}
 }
 
 func extractHeaderAndValue(str string) (header, value string) {
-	_r, _e := regexp.Compile("^([^\n]+)\n(.*)")
-	if _e != nil {
-		panic(_e)
-	}
+	_r := regexp.MustCompile("^([^\n]+)\n(.*)")
 	submatch := _r.FindSubmatch([]byte(str))
 	header = string(submatch[1])
 	rplcr := strings.NewReplacer(header+"\n", "")
 	value = rplcr.Replace(str)
 	return header, value
+}
+
+func isSongHeader(header string) bool {
+	re := regexp.MustCompile(`オープニングテーマ`)
+	if re.Match([]byte(header)) {
+		return true
+	}
+	re = regexp.MustCompile(`エンディングテーマ`)
+	if re.Match([]byte(header)) {
+		return true
+	}
+	re = regexp.MustCompile(`挿入歌`)
+	if re.Match([]byte(header)) {
+		return true
+	}
+	return false
+}
+func getSongTitle(header string) (title string) {
+	re := regexp.MustCompile("「(.*)」$")
+	matche := re.FindSubmatch([]byte(header))
+	return string(matche[1])
 }
 func getStr() (str string) {
 	str = "*リンク\n"
