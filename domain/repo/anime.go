@@ -4,8 +4,6 @@ import "animapi/domain/model/anime"
 import "animapi/infrastructure/db"
 import "animapi/domain/factory/anime"
 
-import "fmt"
-
 type AnimeRepo struct {
 	client IRepoClient
 	dsn    string
@@ -41,13 +39,11 @@ func (animeRepo *AnimeRepo) Save(anime *model.Anime) {
 	// やっぱりSQL文を作るところまで
 	// repoの責務にしないと、
 	// インフラのインターフェースが死ぬんじゃないか？
-	animeRepo.client.Insert(
-		animeRepo.getInsertSQLQuery(anime),
+	animeRepo.client.Exec(
+		// "INSERT|anime_000|tid=?,title=?,comment=?",
+		"INSERT INTO anime_000 (tid,title,comment) VALUES (?, ?, ?)",
+		anime.TID,
+		anime.Title,
+		anime.Comment,
 	)
-}
-func (animeRepo *AnimeRepo) getInsertSQLQuery(anime *model.Anime) (q string) {
-	q = "INSERT IGNORE INTO anime_000 (tid, title, comment) VALUES "
-	// フィクスチャは今のところ"や'を含まないのでテスト通ってしまう
-	q = q + fmt.Sprintf("(\"%s\",\"%s\", \"%s\")", anime.TID, anime.Title, anime.Comment)
-	return q
 }

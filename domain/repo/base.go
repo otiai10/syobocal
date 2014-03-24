@@ -17,6 +17,7 @@ var Repo interface{}
 type IRepoClient interface {
 	FindOne(dsn, id string) *sql.Row
 	Insert(sql string)
+	Exec(query string, args ...interface{})
 }
 type RepoClient struct {
 	Db *infra.Db
@@ -27,4 +28,7 @@ func (client RepoClient) FindOne(dsn, id string) *sql.Row {
 }
 func (client RepoClient) Insert(sql string) {
 	client.Db.Insert(sql)
+}
+func (client RepoClient) Exec(query string, args ...interface{}) {
+	client.Db.Exec(query, args...)
 }

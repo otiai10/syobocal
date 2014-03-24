@@ -87,3 +87,11 @@ func (db *Db) Insert(sql string) {
 	}
 	fmt.Printf("%+v", res)
 }
+
+func (db *Db) Exec(query string, args ...interface{}) {
+	res, e := db.mydb.Exec(query, args...)
+	if e != nil {
+		panic(e)
+	}
+	fmt.Printf("%+v", res)
+}
