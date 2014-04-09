@@ -39,11 +39,18 @@ func (animeRepo *AnimeRepo) Save(anime *model.Anime) {
 	// やっぱりSQL文を作るところまで
 	// repoの責務にしないと、
 	// インフラのインターフェースが死ぬんじゃないか？
+	statement := `INSERT INTO anime_000
+                  (tid, title, comment, firstYear, firstMonth, firstEndYear, firstEndMonth)
+                  VALUES
+                  (?, ?, ?, ?, ?, ?, ?)`
 	animeRepo.client.Exec(
-		// "INSERT|anime_000|tid=?,title=?,comment=?",
-		"INSERT INTO anime_000 (tid,title,comment) VALUES (?, ?, ?)",
+		statement,
 		anime.TID,
 		anime.Title,
 		anime.Comment,
+		anime.FirstYear,
+		anime.FirstMonth,
+		anime.FirstEndYear,
+		anime.FirstEndMonth,
 	)
 }

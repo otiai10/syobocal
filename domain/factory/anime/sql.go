@@ -22,5 +22,9 @@ func (f *AnimeFactory) FromRecord(record *sql.Row) *model.Anime {
 		"0",
 		title,
 		"nil",
+		2013,
+		3,
+		2014,
+		4,
 	}
 }

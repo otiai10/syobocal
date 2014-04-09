@@ -50,7 +50,10 @@ func (db *Db) FindAllAnime() *sql.Rows {
 	return _rows
 }
 func (db *Db) InsertAnime() sql.Result {
-	q := "INSERT INTO anime_" + db.shard + " (tid, title) VALUE (0, '凪のあすから')"
+	statement := `INSERT INTO anime_%s
+                  (tid, title, firstYear, firstMonth, firstEndYear, firstEndMonth) VALUE
+                  (0, '凪のあすから', 2013, 12, 2014, 3)`
+	q := fmt.Sprintf(statement, db.shard)
 	return db.exec(q)
 }
 func (db *Db) DropAnimeTable() sql.Result {
@@ -58,7 +61,17 @@ func (db *Db) DropAnimeTable() sql.Result {
 	return db.exec(q)
 }
 func (db *Db) CreateAnimeTable() sql.Result {
-	q := "CREATE TABLE IF NOT EXISTS anime_" + db.shard + " (id INTEGER UNIQUE AUTO_INCREMENT, tid INT UNSIGNED NOT NULL DEFAULT 0, title TEXT NOT NULL, comment TEXT)"
+	statement := `CREATE TABLE IF NOT EXISTS anime_%s (
+                    id INTEGER UNIQUE AUTO_INCREMENT,
+                    tid INT UNSIGNED NOT NULL DEFAULT 0,
+                    title TEXT NOT NULL,
+                    comment TEXT,
+                    firstYear INTEGER NOT NULL,
+                    firstMonth INTEGER NOT NULL,
+                    firstEndYear INTEGER NOT NULL,
+                    firstEndMonth INTEGER NOT NULL
+                  )`
+	q := fmt.Sprintf(statement, db.shard)
 	return db.exec(q)
 }
 func (db *Db) exec(query string) sql.Result {
