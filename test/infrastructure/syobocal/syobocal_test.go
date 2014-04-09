@@ -14,7 +14,8 @@ import "animapi/infrastructure/syobocal"
 func TestRequestByRange(t *testing.T) {
 	Describe(t, "RequestByRange", func() {
 		It("should find animes by range", func() {
-			syobocal := syobocal.GetAPI()
+			// syobocal := syobocal.GetAPI()
+			syobocal := syobocal.GetAPIofTest()
 			dur, _ := time.ParseDuration("-3h")
 			from := time.Now().Add(dur)
 			to := time.Now()

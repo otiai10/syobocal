@@ -13,14 +13,15 @@ func SyobocalApiOf(client ISyobocalHTTPClient) SyobocalAPI {
 		client: client,
 	}
 }
-func GetAPI() SyobocalAPI {
-	/*
-		client := &SyobocalHTTPClient{
-			baseURL: "http://cal.syoboi.jp/db.php",
-		}
-	*/
+func GetAPIofTest() SyobocalAPI {
 	client := &SyobocalDummyHTTPClient{
 		baseURL: "dummy",
+	}
+	return SyobocalAPI{client}
+}
+func GetAPI() SyobocalAPI {
+	client := &SyobocalHTTPClient{
+		baseURL: "http://cal.syoboi.jp/db.php",
 	}
 	return SyobocalAPI{client}
 }
