@@ -1,0 +1,9 @@
+language: go
+go:
+    - tip
+services:
+    # - redis-server
+before_script:
+    # - something
+script:
+    - go test -v ./...
