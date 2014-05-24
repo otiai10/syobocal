@@ -8,6 +8,8 @@ It can
 3. (the combination of 1 and 2) Crawl and store those.
 4. Find animes, anisons and programs from local MySQL.
 
+[![Build Status](https://travis-ci.org/otiai10/animapi.svg?branch=ws/v3)](https://travis-ci.org/otiai10/animapi)
+
 # usage
 ### in go code
 ```go
