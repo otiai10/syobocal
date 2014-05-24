@@ -24,7 +24,8 @@ func main() {
     programs := animapi.SYOBOCAL.FindPrograms(since)
     fmt.Printf("%+v", programs)
 
-    programs = animapi.LOCAL.FindPrograms(since)
+    conf := animapi.CONF.File("./my.conf")
+    programs = animapi.db(conf).FindPrograms(since)
     fmt.Printf("%+v", programs)
 }
 ```
