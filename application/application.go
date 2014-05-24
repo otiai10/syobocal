@@ -1,7 +1,7 @@
 package application
 
 var (
-	fmt_greet    = "Hi, I'm %s"
+	fmt_greet    = "Hi, I'm %s!"
 	SRC_SYOBOCAL = "SYOBOCAL"
 	SRC_LOCAL    = "LOCAL"
 )
