@@ -12,7 +12,15 @@ type Config struct {
 	Pass string
 }
 
-func File(args ...string) *Config {
+var CONF = proxyConf{}
+
+type proxyConf struct{}
+
+func (proxy proxyConf) File(args ...string) *Config {
+	return conffile(args)
+}
+
+func conffile(args []string) *Config {
 	o := ""
 	if 1 < len(args) {
 		o = args[1]
