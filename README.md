@@ -19,7 +19,7 @@ import "github.com/otiai10/animapi"
 import "fmt"
 
 func main() {
-    since := animapi.Ago("1w")    
+    since := animapi.Since("-1w")    
 
     programs := animapi.SYOBOCAL.FindPrograms(since)
     fmt.Printf("%+v", programs)
