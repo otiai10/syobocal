@@ -38,7 +38,7 @@ OK, just starting crawler
 
 # test
 ```
-% go test ./test/...
+% go test ./...
 ```
 
 # dependencies
