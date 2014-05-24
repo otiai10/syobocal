@@ -10,7 +10,7 @@ func assert(t *testing.T, actual interface{}, expected interface{}) {
 	if actual == expected {
 		return
 	}
-	fmt.Printf("Expected to be `%+v`, but actual `%+v`", expected, actual)
+	fmt.Printf("Expected to be `%+v`, but actual `%+v`\n", expected, actual)
 	os.Exit(1)
 }
 func TestApplication_Get(t *testing.T) {
