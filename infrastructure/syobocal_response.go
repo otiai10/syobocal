@@ -8,11 +8,14 @@ import "encoding/xml"
 type SyobocalResponse struct {
 	XMLName    xml.Name     `xml:"TitleLookupResponse"`
 	Result     LookupResult `xml:"Result"`
-	TitleItems []TitleItem  `xml:"TitleItems"`
+	TitleItems TitleItems   `xml:"TitleItems"`
 }
 type LookupResult struct {
 	Code    string `xml:"Code"`
 	Message string `xml:"Message"`
+}
+type TitleItems struct {
+	Items []TitleItem `xml:"TitleItem"`
 }
 type TitleItem struct {
 	TID          string `xml:"TID"`

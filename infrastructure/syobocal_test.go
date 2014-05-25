@@ -5,6 +5,7 @@ import "testing"
 import "fmt"
 import "os"
 import "time"
+import "reflect"
 
 func assert(t *testing.T, actual interface{}, expected interface{}) {
 	if actual == expected {
@@ -15,8 +16,10 @@ func assert(t *testing.T, actual interface{}, expected interface{}) {
 }
 
 func TestSyobocalHttpClient(t *testing.T) {
-	since, _ := time.ParseDuration("-2h")
+	since, _ := time.ParseDuration("-24h")
 	client := infrastructure.NewSyobocalClient()
-	res, e := client.TitleLookup(since)
-	fmt.Printf("%+v\n%+v\n", res, e)
+	res, _ := client.TitleLookup(since)
+	for _, item := range res.TitleItems.Items {
+		assert(t, reflect.TypeOf(item).String(), "infrastructure.TitleItem")
+	}
 }
