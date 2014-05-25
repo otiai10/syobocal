@@ -22,8 +22,8 @@ func TestAnimapi_SYOBOCAL(t *testing.T) {
 	)
 }
 func TestAnimapi_SYOBOCAL_FindPrograms(t *testing.T) {
-	since, e := animapi.Since("-1w")
-	fmt.Println(since, e)
+	since, _ := animapi.Since("-1w")
+	animapi.SYOBOCAL.FindPrograms(since)
 	/*
 		programs := animapi.SYOBOCAL.FindPrograms(since)
 		assert(
