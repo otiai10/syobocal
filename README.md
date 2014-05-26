@@ -23,8 +23,8 @@ func main() {
     programs, _ := animapi.SYOBOCAL.FindProgramsSince("-1w")
     fmt.Printf("%+v", programs)
 
-    conf := animapi.CONF.File("./my.conf")
-    programs = animapi.db(conf).FindPrograms(since)
+    conf := "./my.conf"
+    programs, _ := animapi.DB(conf).FindProgramsSince("-1w")
     fmt.Printf("%+v", programs)
 }
 ```
