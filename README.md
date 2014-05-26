@@ -19,9 +19,8 @@ import "github.com/otiai10/animapi"
 import "fmt"
 
 func main() {
-    since := animapi.Since("-1w")    
 
-    programs := animapi.SYOBOCAL.FindPrograms(since)
+    programs, _ := animapi.SYOBOCAL.FindProgramsSince("-1w")
     fmt.Printf("%+v", programs)
 
     conf := animapi.CONF.File("./my.conf")

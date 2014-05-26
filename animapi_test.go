@@ -30,3 +30,12 @@ func TestAnimapi_SYOBOCAL_FindPrograms(t *testing.T) {
 		"[]model.Program",
 	)
 }
+func TestAnimapi_SYOBOCAL_FindProgramsSince(t *testing.T) {
+	programs, e := animapi.SYOBOCAL.FindProgramsSince("-1w")
+	assert(t, e, nil)
+	assert(
+		t,
+		reflect.TypeOf(programs).String(),
+		"[]model.Program",
+	)
+}

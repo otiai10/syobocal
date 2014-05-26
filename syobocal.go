@@ -16,3 +16,11 @@ func (s syobocal) FindPrograms(since time.Duration) []model.Program {
 	res, _ := client.TitleLookup(since)
 	return model.CreateProgramsFromSyobocalResponse(res)
 }
+func (s syobocal) FindProgramsSince(snc string) (programs []model.Program, e error) {
+	var dur time.Duration
+	if dur, e = Since(snc); e != nil {
+		return programs, e
+	}
+	programs = s.FindPrograms(dur)
+	return
+}
