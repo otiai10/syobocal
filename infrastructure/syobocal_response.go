@@ -11,7 +11,7 @@ type SyobocalResponse struct {
 	TitleItems TitleItems   `xml:"TitleItems"`
 }
 type LookupResult struct {
-	Code    string `xml:"Code"`
+	Code    int    `xml:"Code"`
 	Message string `xml:"Message"`
 }
 type TitleItems struct {
