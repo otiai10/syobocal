@@ -39,3 +39,16 @@ func TestAnimapi_SYOBOCAL_FindProgramsSince(t *testing.T) {
 		"[]model.Program",
 	)
 }
+func TestAnimapi_DB(t *testing.T) {
+
+	mysqlClient := animapi.DB("./my.conf")
+	assert(t, mysqlClient.Err, nil)
+	mysqlClient = animapi.DB("./notfound.conf")
+	assert(
+		t,
+		mysqlClient.Err.Error(),
+		"open ./notfound.conf: no such file or directory",
+	)
+	mysqlClient = animapi.DB("./my.conf", "test")
+	assert(t, mysqlClient.Err, nil)
+}
