@@ -18,7 +18,7 @@ type TitleItems struct {
 	Items []TitleItem `xml:"TitleItem"`
 }
 type TitleItem struct {
-	TID          string `xml:"TID"`
+	TID          int    `xml:"TID"`
 	LastUpdate   string `xml:"LastUpdate"`
 	Title        string `xml:"Title"`
 	ShortTitle   string `xml:"ShortTitle"`

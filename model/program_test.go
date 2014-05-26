@@ -19,6 +19,7 @@ func TestProgramFactory(t *testing.T) {
 	response, _ := infrastructure.ConvertBytes2Response(bytes)
 	programs := model.CreateProgramsFromSyobocalResponse(response)
 	assert(t, programs[0].Anime.Title, "ニセコイ")
+	assert(t, len(programs[0].Anime.Anisongs), 7)
 }
 
 var sampleResponse = `<?xml version="1.0" encoding="UTF-8"?>

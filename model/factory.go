@@ -17,9 +17,10 @@ func CreateProgram(anime Anime) Program {
 	}
 }
 func CreateAnimeFromTitelItem(item infrastructure.TitleItem) (anime Anime, e error) {
-	CreateAnisongsFromCommentString(item.Comment)
+	anisongs := CreateAnisongsFromCommentString(item.Comment, item.TID)
 	anime = Anime{
-		Title: item.Title,
+		Title:    item.Title,
+		Anisongs: anisongs,
 	}
 	return
 }
