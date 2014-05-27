@@ -4,6 +4,6 @@ go:
 services:
     # - redis-server
 before_script:
-    # - something
+    - go get github.com/otiai10/mint
 script:
     - go test -v ./...
