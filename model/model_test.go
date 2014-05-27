@@ -3,23 +3,15 @@ package model_test
 import "testing"
 import "github.com/otiai10/animapi/model"
 import "github.com/otiai10/animapi/infrastructure"
-import "fmt"
-import "os"
 
-func assert(t *testing.T, actual interface{}, expected interface{}) {
-	if actual == expected {
-		return
-	}
-	fmt.Printf("Expected to be `%+v`, but actual `%+v`\n", expected, actual)
-	os.Exit(1)
-}
+import . "github.com/otiai10/mint"
 
 func TestProgramFactory(t *testing.T) {
 	bytes := []byte(sampleResponse)
 	response, _ := infrastructure.ConvertBytes2Response(bytes)
 	programs := model.CreateProgramsFromSyobocalResponse(response)
-	assert(t, programs[0].Anime.Title, "ニセコイ")
-	assert(t, len(programs[0].Anime.Anisongs), 7)
+	Expect(t, programs[0].Anime.Title).ToBe("ニセコイ")
+	Expect(t, len(programs[0].Anime.Anisongs)).ToBe(7)
 }
 
 var sampleResponse = `<?xml version="1.0" encoding="UTF-8"?>
