@@ -1,10 +1,23 @@
 package animapi
 
 import "github.com/robfig/config"
+import "database/sql"
+import _ "github.com/go-sql-driver/mysql"
+import "fmt"
+import "github.com/otiai10/animapi/model"
 
-type MySqlClient struct {
+// TODO: このファイルの一部の操作はinfrastructureに分割すべき
+// import "github.com/otiai10/animapi/infrastructure"
+
+var (
+	Database = "mysql"
+	Adress   = "%s:%s@%s:%s/%s"
+)
+
+type MySQL struct {
 	conf conf
 	Err  error
+	db   *sql.DB
 }
 type conf struct {
 	Port string
@@ -13,13 +26,35 @@ type conf struct {
 	Pass string
 }
 
-func DB(args ...string) (client MySqlClient) {
+func DB(args ...string) *MySQL {
+	client := &MySQL{}
 	c, e := ensureConf(args)
 	if e != nil {
 		client.Err = e
-		return
+		return client
 	}
 	client.conf = c
+	client.connect()
+	return client
+}
+func (client *MySQL) connect() {
+	address := fmt.Sprintf(
+		Adress,
+		client.conf.User,
+		client.conf.Pass,
+		client.conf.Host,
+		client.conf.Port,
+		"animapi", // TODO: ここ指定できるようにする
+	)
+	db, e := sql.Open(
+		Database,
+		address,
+	)
+	client.db = db
+	client.Err = e
+	return
+}
+func (m *MySQL) FindProgramsSince(snc string) (programs []model.Program, e error) {
 	return
 }
 func ensureConf(args []string) (c conf, e error) {
