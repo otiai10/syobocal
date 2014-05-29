@@ -4,7 +4,8 @@ import "github.com/robfig/config"
 import "database/sql"
 import _ "github.com/go-sql-driver/mysql"
 import "fmt"
-import "github.com/otiai10/animapi/model"
+
+// import "github.com/otiai10/animapi/model"
 
 // TODO: このファイルの一部の操作はinfrastructureに分割すべき
 // import "github.com/otiai10/animapi/infrastructure"
@@ -24,6 +25,7 @@ type conf struct {
 	Host string
 	User string
 	Pass string
+	Dsn  string
 }
 
 func DB(args ...string) *MySQL {
@@ -44,7 +46,7 @@ func (client *MySQL) connect() {
 		client.conf.Pass,
 		client.conf.Host,
 		client.conf.Port,
-		"animapi", // TODO: ここ指定できるようにする
+		client.conf.Dsn, // TODO: ここ指定できるようにする
 	)
 	db, e := sql.Open(
 		Database,
@@ -52,9 +54,6 @@ func (client *MySQL) connect() {
 	)
 	client.db = db
 	client.Err = e
-	return
-}
-func (m *MySQL) FindProgramsSince(snc string) (programs []model.Program, e error) {
 	return
 }
 func ensureConf(args []string) (c conf, e error) {
@@ -67,7 +66,6 @@ func ensureConf(args []string) (c conf, e error) {
 	if e != nil {
 		return
 	}
-
 	po, e := cnf.String(confOpt, "port")
 	if e != nil {
 		return
@@ -88,5 +86,10 @@ func ensureConf(args []string) (c conf, e error) {
 		return
 	}
 	c.Pass = pa
+	ds, e := cnf.String(confOpt, "dsn")
+	if e != nil {
+		return
+	}
+	c.Dsn = ds
 	return
 }
