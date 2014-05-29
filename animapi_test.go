@@ -17,13 +17,3 @@ func TestAnimapi_SYOBOCAL_FindProgramsSince(t *testing.T) {
 	Expect(t, e).ToBe(nil)
 	Expect(t, programs).TypeOf("[]model.Program")
 }
-func TestAnimapi_DB(t *testing.T) {
-	mysqlClient := animapi.DB("./my.conf")
-	Expect(t, mysqlClient.Err).ToBe(nil)
-
-	mysqlClient = animapi.DB("./notfound.conf")
-	Expect(t, mysqlClient.Err.Error()).ToBe("open ./notfound.conf: no such file or directory")
-
-	mysqlClient = animapi.DB("./my.conf", "test")
-	Expect(t, mysqlClient.Err).ToBe(nil)
-}
