@@ -6,8 +6,6 @@ import "github.com/otiai10/animapi/infrastructure"
 import "testing"
 import . "github.com/otiai10/mint"
 
-import "fmt"
-
 func TestAnimapi_DB(t *testing.T) {
 	mysqlClient := animapi.DB("./my.conf")
 	Expect(t, mysqlClient.Err).ToBe(nil)
@@ -22,21 +20,28 @@ func TestAnimapi_DB(t *testing.T) {
 func TestAnimapi_DB_FindPrograms(t *testing.T) {
 	since, _ := animapi.Since("-4h")
 	c := "./my.conf"
+
+	// Find
 	programs := animapi.DB(c, "test").FindPrograms(since)
 	Expect(t, programs).TypeOf("[]model.Program")
-	fmt.Printf("最終的に見つかったやつ %+v\n", programs)
+	Expect(t, len(programs)).ToBe(0)
 
-	// テストデータ入れる
-	bytes := []byte(sampleResponse)
-	response, _ := infrastructure.ConvertBytes2Response(bytes)
-	programs = model.CreateProgramsFromSyobocalResponse(response)
+	// Add
+	programs = getSamplePrograms()
 	e := animapi.DB(c, "test").AddPrograms(programs)
 	Expect(t, e).ToBe(nil)
 
+	// Find
 	programs = animapi.DB(c, "test").FindPrograms(since)
-	fmt.Printf("テストデータ後に見つかったやつ %+v\n", programs)
+	Expect(t, len(programs)).ToBe(1)
 
 	animapi.DB(c, "test").TearDown()
+}
+
+func getSamplePrograms() []model.Program {
+	bytes := []byte(sampleResponse)
+	response, _ := infrastructure.ConvertBytes2Response(bytes)
+	return model.CreateProgramsFromSyobocalResponse(response)
 }
 
 var sampleResponse = `
