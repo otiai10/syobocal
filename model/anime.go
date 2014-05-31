@@ -1,6 +1,8 @@
 package model
 
 type Anime struct {
-	Title    string
-	Anisongs []Anisong
+	TID         int
+	Title       string
+	Anisongs    []Anisong
+	LastUpdated int64
 }

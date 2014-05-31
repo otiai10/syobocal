@@ -12,7 +12,8 @@ import "fmt"
 
 var (
 	Database = "mysql"
-	Adress   = "%s:%s@%s:%s/%s"
+	Protocol = "tcp"
+	Adress   = "%s:%s@%s(%s:%s)/%s"
 )
 
 type MySQL struct {
@@ -44,6 +45,7 @@ func (client *MySQL) connect() {
 		Adress,
 		client.conf.User,
 		client.conf.Pass,
+		Protocol,
 		client.conf.Host,
 		client.conf.Port,
 		client.conf.Dsn, // TODO: ここ指定できるようにする
