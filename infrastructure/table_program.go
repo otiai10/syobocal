@@ -37,3 +37,8 @@ func (table *ProgramsTable) FindSince(snc time.Duration) (rows *sql.Rows, e erro
 	query := fmt.Sprintf("SELECT * FROM %s WHERE timestamp > ?", table.name)
 	return table.db.Query(query, timestamp)
 }
+func (table *ProgramsTable) Drop() (e error) {
+	query := `DROP TABLE IF EXISTS programs`
+	_, e = table.db.Exec(query)
+	return
+}

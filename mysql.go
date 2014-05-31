@@ -3,6 +3,7 @@ package animapi
 import "github.com/robfig/config"
 import "database/sql"
 import _ "github.com/go-sql-driver/mysql"
+import "github.com/otiai10/animapi/infrastructure"
 import "fmt"
 
 // import "github.com/otiai10/animapi/model"
@@ -94,4 +95,7 @@ func ensureConf(args []string) (c conf, e error) {
 	}
 	c.Dsn = ds
 	return
+}
+func (m *MySQL) TearDown() {
+	infrastructure.NewProgramsTable(m.db).Drop()
 }

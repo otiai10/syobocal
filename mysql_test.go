@@ -35,6 +35,8 @@ func TestAnimapi_DB_FindPrograms(t *testing.T) {
 
 	programs = animapi.DB(c, "test").FindPrograms(since)
 	fmt.Printf("テストデータ後に見つかったやつ %+v\n", programs)
+
+	animapi.DB(c, "test").TearDown()
 }
 
 var sampleResponse = `
