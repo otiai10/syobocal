@@ -6,6 +6,9 @@ import "github.com/otiai10/animapi/infrastructure"
 
 func (m *MySQL) FindPrograms(since time.Duration) (programs []model.Program) {
 	table := infrastructure.NewProgramsTable(m.db)
+	if e := table.CreateIfNotExists(); e != nil {
+		return
+	}
 	rows, e := table.FindSince(since)
 	if e != nil {
 		return
