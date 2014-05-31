@@ -21,8 +21,8 @@ type ProgramsTable struct {
 func (table *ProgramsTable) CreateIfNotExists() (e error) {
 	query := `
 CREATE TABLE IF NOT EXISTS programs (
-  tid int(11) DEFAULT NULL,
-  timestamp timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  tid int(11) PRIMARY KEY,
+  timestamp bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8`
 	_, e = table.db.Exec(query)
 	return
