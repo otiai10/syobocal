@@ -2,8 +2,9 @@ language: go
 go:
     - tip
 services:
-    # - redis-server
+    - mysql
 before_script:
+    - mysql -e 'create database animapi_test;'
     - go get github.com/otiai10/mint
 script:
     - go test -v ./...
