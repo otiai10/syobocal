@@ -15,3 +15,15 @@ func (m *MySQL) FindPrograms(since time.Duration) (programs []model.Program) {
 	}
 	return model.CreateProgramsFromMySQLResponse(rows)
 }
+func (m *MySQL) AddPrograms(programs []model.Program) (e error) {
+	table := infrastructure.NewProgramsTable(m.db)
+	if e = table.CreateIfNotExists(); e != nil {
+		return
+	}
+	for _, program := range programs {
+		if e = table.Add(program.Anime.TID, time.Now().Unix()); e != nil {
+			return
+		}
+	}
+	return
+}

@@ -27,8 +27,13 @@ CREATE TABLE IF NOT EXISTS programs (
 	_, e = table.db.Exec(query)
 	return
 }
+func (table *ProgramsTable) Add(tid int, lastupdate int64) (e error) {
+	query := `INSERT IGNORE INTO programs (tid, timestamp) VALUES (?, ?)`
+	_, e = table.db.Exec(query, tid, lastupdate)
+	return
+}
 func (table *ProgramsTable) FindSince(snc time.Duration) (rows *sql.Rows, e error) {
 	timestamp := time.Now().Add(snc).Unix()
-	query := fmt.Sprintf("SELECT * FROM %s WHERE timestamp < ?", table.name)
+	query := fmt.Sprintf("SELECT * FROM %s WHERE timestamp > ?", table.name)
 	return table.db.Query(query, timestamp)
 }

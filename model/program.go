@@ -1,5 +1,6 @@
 package model
 
 type Program struct {
-	Anime Anime
+	Anime     Anime
+	Timestamp int64
 }

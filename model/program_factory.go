@@ -8,10 +8,11 @@ func CreateProgramsFromMySQLResponse(rows *sql.Rows) (programs []Program) {
 		var timestamp int64
 		rows.Scan(&tid, &timestamp)
 		program := Program{
-			Anime{
+			Anime: Anime{
 				TID:         tid,
 				LastUpdated: timestamp,
 			},
+			Timestamp: timestamp,
 		}
 		programs = append(programs, program)
 	}
