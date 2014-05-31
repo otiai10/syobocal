@@ -38,6 +38,11 @@ func (table *ProgramsTable) FindSince(snc time.Duration) (rows *sql.Rows, e erro
 	query := fmt.Sprintf("SELECT * FROM %s WHERE timestamp > ?", table.name)
 	return table.db.Query(query, timestamp)
 }
+func (table *ProgramsTable) Delete(tid int, timestamp int64) (e error) {
+	query := `DELETE FROM programs WHERE tid=? AND timestamp=?`
+	_, e = table.db.Exec(query, tid, timestamp)
+	return
+}
 func (table *ProgramsTable) Drop() (e error) {
 	query := `DROP TABLE IF EXISTS programs`
 	_, e = table.db.Exec(query)

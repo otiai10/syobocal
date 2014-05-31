@@ -20,6 +20,7 @@ func TestAnimapi_DB(t *testing.T) {
 func TestAnimapi_DB_FindPrograms(t *testing.T) {
 	since, _ := animapi.Since("-4h")
 	c := "./my.conf"
+	animapi.DB(c, "test").TearDown()
 
 	// Find
 	programs := animapi.DB(c, "test").FindPrograms(since)
@@ -35,7 +36,13 @@ func TestAnimapi_DB_FindPrograms(t *testing.T) {
 	programs = animapi.DB(c, "test").FindPrograms(since)
 	Expect(t, len(programs)).ToBe(1)
 
-	animapi.DB(c, "test").TearDown()
+	// Delete
+	e = animapi.DB(c, "test").DeleteProgram(programs[0])
+	Expect(t, e).ToBe(nil)
+
+	// Find
+	programs = animapi.DB(c, "test").FindPrograms(since)
+	Expect(t, len(programs)).ToBe(0)
 }
 
 func getSamplePrograms() []model.Program {

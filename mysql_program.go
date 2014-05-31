@@ -27,3 +27,10 @@ func (m *MySQL) AddPrograms(programs []model.Program) (e error) {
 	}
 	return
 }
+func (m *MySQL) DeleteProgram(program model.Program) (e error) {
+	table := infrastructure.NewProgramsTable(m.db)
+	if e = table.CreateIfNotExists(); e != nil {
+		return
+	}
+	return table.Delete(program.Anime.TID, program.Timestamp)
+}
