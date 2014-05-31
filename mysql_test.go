@@ -27,14 +27,25 @@ func TestAnimapi_DB_FindPrograms(t *testing.T) {
 	Expect(t, programs).TypeOf("[]model.Program")
 	Expect(t, len(programs)).ToBe(0)
 
+	animes := animapi.DB(c, "test").FindAnimes(since)
+	Expect(t, animes).TypeOf("[]model.Anime")
+	Expect(t, len(animes)).ToBe(0)
+
 	// Add
 	programs = getSamplePrograms()
 	e := animapi.DB(c, "test").AddPrograms(programs)
 	Expect(t, e).ToBe(nil)
 
+	e = animapi.DB(c, "test").AddAnime(programs[0].Anime)
+	Expect(t, e).ToBe(nil)
+
 	// Find
 	programs = animapi.DB(c, "test").FindPrograms(since)
 	Expect(t, len(programs)).ToBe(1)
+
+	animes = animapi.DB(c, "test").FindAnimes(since)
+	Expect(t, len(animes)).ToBe(1)
+	Expect(t, animes[0].Title).ToBe("ニセコイ")
 
 	// Delete
 	e = animapi.DB(c, "test").DeleteProgram(programs[0])
