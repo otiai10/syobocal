@@ -99,4 +99,5 @@ func ensureConf(args []string) (c conf, e error) {
 func (m *MySQL) TearDown() {
 	infrastructure.NewProgramsTable(m.db).Drop()
 	infrastructure.NewAnimesTable(m.db).Drop()
+	infrastructure.NewAnisongsTable(m.db).Drop()
 }
