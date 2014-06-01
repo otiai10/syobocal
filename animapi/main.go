@@ -12,9 +12,11 @@ type Command interface {
 
 var commands = []Command{
 	initHelp(),
+	initCrawl(),
 }
 var (
 	yellow = gocolorize.NewColor("yellow")
+	green  = gocolorize.NewColor("green")
 )
 
 func main() {
