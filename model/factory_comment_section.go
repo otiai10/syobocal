@@ -5,7 +5,7 @@ import "errors"
 import "regexp"
 
 var (
-	comment_section_separator = regexp.MustCompile("\n\n")
+	comment_section_separator = regexp.MustCompile("\n\n|\n\\*")
 	comment_section_anisong   = regexp.MustCompile("(オープニングテーマ|エンディングテーマ|挿入歌)([0-9]*)「(.+)」$")
 )
 
