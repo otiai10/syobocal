@@ -20,12 +20,12 @@ type AnisongsTable struct {
 func (table *AnisongsTable) CreateIfNotExists() (e error) {
 	query := `
 CREATE TABLE IF NOT EXISTS anisongs (
-  id INTEGER PRIMARY KEY AUTO_INCREMENT,
   tid int(11) NOT NULL,
-  title text NOT NULL,
+  title VARCHAR(64) NOT NULL,
   label text,
   indx int,
-  detail text
+  detail text,
+  PRIMARY KEY (tid, title)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8`
 	_, e = table.db.Exec(query)
 	return
