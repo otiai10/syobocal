@@ -1,7 +1,7 @@
 package main
 
 import "os"
-import "flag"
+import "github.com/otiai10/flagg"
 import "fmt"
 import "github.com/agtorre/gocolorize"
 
@@ -19,13 +19,15 @@ var (
 	green  = gocolorize.NewColor("green")
 )
 
+func init() {
+	flagg.Parse()
+}
 func main() {
 	cmd := rescueCommand()
 	cmd.Run()
 }
 func rescueCommand() (cmd Command) {
-	flag.Parse()
-	args := flag.Args()
+	args := flagg.Args()
 	if len(args) < 1 {
 		return initHelp()
 	}

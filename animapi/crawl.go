@@ -2,6 +2,8 @@ package main
 
 import "github.com/otiai10/animapi"
 import "github.com/otiai10/animapi/model"
+import "github.com/otiai10/flagg"
+import "time"
 
 type CmdCrawl struct {
 	count int
@@ -16,6 +18,23 @@ func (c *CmdCrawl) Name() string {
 	return "crawl"
 }
 func (c *CmdCrawl) Run() {
+	daemon := flagg.Bool("daemon", false, "Run crawl in daemon mode")
+	if *daemon {
+		c.executeLoop()
+	} else {
+		c.execute()
+	}
+}
+func (c *CmdCrawl) executeLoop() {
+	for {
+		c.execute()
+		per := flagg.String("per", "1h", "Crawl per")
+		dur, e := animapi.Since(*per)
+		if e != nil {
+			dur, _ = time.ParseDuration("1h")
+		}
+		time.Sleep(dur)
+	}
 }
 func (c *CmdCrawl) execute() (e error) {
 	c.count++
