@@ -29,8 +29,9 @@ func main() {
 }
 ```
 ### in command line
+// TODO: 開始時と終了時のreporterをつくる
 ```sh
-% animapi crawl -cron 24h  -mysql
+% animapi crawl daemon per=1d
 OK, just starting crawler
 [mode]  cron per 24h
 [mysql] localhost:3306
