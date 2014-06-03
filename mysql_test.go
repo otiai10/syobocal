@@ -55,6 +55,7 @@ func TestAnimapi_DB_FindPrograms(t *testing.T) {
 
 	animes = animapi.DB(c, "test").FindAnimes(since)
 	Expect(t, len(animes)).ToBe(1)
+	Expect(t, animes[0].Category).ToBe(1)
 	Expect(t, animes[0].Title).ToBe("ニセコイ")
 
 	// Delete
