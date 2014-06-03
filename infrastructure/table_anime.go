@@ -24,14 +24,15 @@ CREATE TABLE IF NOT EXISTS animes (
   tid int(11) NOT NULL,
   title text NOT NULL,
   lastUpdated bigint NOT NULL,
+  category int NOT NULL,
   primary key(tid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8`
 	_, e = table.db.Exec(query)
 	return
 }
-func (table *AnimesTable) Add(tid int, title string, lastupdate int64) (e error) {
-	query := `INSERT IGNORE INTO animes (tid, title, lastUpdated) VALUES (?, ?, ?)`
-	_, e = table.db.Exec(query, tid, title, lastupdate)
+func (table *AnimesTable) Add(tid int, title string, lastupdate int64, category int) (e error) {
+	query := `INSERT IGNORE INTO animes (tid, title, lastUpdated, category) VALUES (?, ?, ?, ?)`
+	_, e = table.db.Exec(query, tid, title, lastupdate, category)
 	return
 }
 func (table *AnimesTable) FindSince(snc time.Duration) (rows *sql.Rows, e error) {

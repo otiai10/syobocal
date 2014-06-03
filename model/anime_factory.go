@@ -7,15 +7,17 @@ func CreateAnimesFromMySQLResponse(rows *sql.Rows) (animes []Anime) {
 		var tid int
 		var title string
 		var lastUpdated int64
-		rows.Scan(&tid, &title, &lastUpdated)
-		animes = append(animes, CreateAnime(tid, title, lastUpdated))
+		var category int
+		rows.Scan(&tid, &title, &lastUpdated, &category)
+		animes = append(animes, CreateAnime(tid, title, lastUpdated, category))
 	}
 	return
 }
-func CreateAnime(tid int, title string, lastUpdated int64) Anime {
+func CreateAnime(tid int, title string, lastUpdated int64, category int) Anime {
 	return Anime{
 		TID:         tid,
 		Title:       title,
 		LastUpdated: lastUpdated,
+		Category:    category,
 	}
 }

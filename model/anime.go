@@ -5,4 +5,5 @@ type Anime struct {
 	Title       string
 	Anisongs    []Anisong
 	LastUpdated int64
+	Category    int
 }

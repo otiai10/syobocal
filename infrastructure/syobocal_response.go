@@ -26,7 +26,7 @@ type TitleItem struct {
 	TitleEnglish string `xml:"TitleEN"`
 	// TODO: 文字列処理してstruct化
 	Comment       string `xml:"Comment"` //とりあえず
-	Category      string `xml:"Category"`
+	Category      int    `xml:"Cat"`
 	Flag          string `xml:"TitleFlag"`
 	FirstYear     string `xml:"FirstYear"`
 	FirstMonth    string `xml:"FirstMonth"`

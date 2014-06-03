@@ -14,6 +14,7 @@ func CreateAnimeFromTitelItem(item infrastructure.TitleItem) (anime Anime, e err
 		Title:       item.Title,
 		Anisongs:    anisongs,
 		LastUpdated: ts.Unix(),
+		Category:    item.Category,
 	}
 	return
 }

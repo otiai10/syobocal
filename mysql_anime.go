@@ -20,7 +20,7 @@ func (m *MySQL) AddAnime(anime model.Anime) (e error) {
 	if e = table.CreateIfNotExists(); e != nil {
 		return
 	}
-	return table.Add(anime.TID, anime.Title, anime.LastUpdated)
+	return table.Add(anime.TID, anime.Title, anime.LastUpdated, anime.Category)
 }
 func (m *MySQL) DeleteAnime(anime model.Anime) (e error) {
 	table := infrastructure.NewAnimesTable(m.db)
