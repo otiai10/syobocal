@@ -15,6 +15,14 @@ func (m *MySQL) FindAnimes(since time.Duration) (animes []model.Anime) {
 	}
 	return model.CreateAnimesFromMySQLResponse(rows)
 }
+func (m *MySQL) FindAnimesWithAnisongs(since time.Duration) (animes []model.Anime) {
+	for _, anime := range m.FindAnimes(since) {
+		anisongs := m.FindAnisongsByTID(anime.TID)
+		anime.Anisongs = anisongs
+		animes = append(animes, anime)
+	}
+	return animes
+}
 func (m *MySQL) AddAnime(anime model.Anime) (e error) {
 	table := infrastructure.NewAnimesTable(m.db)
 	if e = table.CreateIfNotExists(); e != nil {

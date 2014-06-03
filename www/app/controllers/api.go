@@ -16,6 +16,6 @@ func (c Api) AnisongsByTid(tid int) revel.Result {
 
 func (c Api) Animes() revel.Result {
 	since, _ := animapi.Since("-1w")
-	anisongs := DB.FindAnimes(since)
+	anisongs := DB.FindAnimesWithAnisongs(since)
 	return c.RenderJson(anisongs)
 }
