@@ -3,6 +3,8 @@ package model
 import "database/sql"
 import "github.com/otiai10/animapi/infrastructure"
 
+const syobocal_time_format = "2006-01-02 15:04:05"
+
 func CreateProgramsFromMySQLResponse(rows *sql.Rows) (programs []Program) {
 	for rows.Next() {
 		var tid int
@@ -31,6 +33,7 @@ func CreateProgramsFromSyobocalResponse(response infrastructure.SyobocalResponse
 }
 func CreateProgram(anime Anime) Program {
 	return Program{
-		Anime: anime,
+		Anime:     anime,
+		Timestamp: anime.LastUpdated,
 	}
 }

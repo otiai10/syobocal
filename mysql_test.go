@@ -6,6 +6,9 @@ import "github.com/otiai10/animapi/infrastructure"
 import "testing"
 import . "github.com/otiai10/mint"
 
+import "strconv"
+import "time"
+
 func TestAnimapi_DB(t *testing.T) {
 	mysqlClient := animapi.DB("./my.conf")
 	Expect(t, mysqlClient.Err).ToBe(nil)
@@ -18,7 +21,9 @@ func TestAnimapi_DB(t *testing.T) {
 }
 
 func TestAnimapi_DB_FindPrograms(t *testing.T) {
-	since, _ := animapi.Since("-4h")
+
+	fixture, since := getSamplePrograms()
+
 	c := "./my.conf"
 	animapi.DB(c, "test").TearDown()
 
@@ -35,14 +40,13 @@ func TestAnimapi_DB_FindPrograms(t *testing.T) {
 	Expect(t, len(anisongs)).ToBe(0)
 
 	// Add
-	programs = getSamplePrograms()
-	e := animapi.DB(c, "test").AddPrograms(programs)
+	e := animapi.DB(c, "test").AddPrograms(fixture)
 	Expect(t, e).ToBe(nil)
 
-	e = animapi.DB(c, "test").AddAnime(programs[0].Anime)
+	e = animapi.DB(c, "test").AddAnime(fixture[0].Anime)
 	Expect(t, e).ToBe(nil)
 
-	e = animapi.DB(c, "test").AddAnisongsOfAnime(programs[0].Anime)
+	e = animapi.DB(c, "test").AddAnisongsOfAnime(fixture[0].Anime)
 	Expect(t, e).ToBe(nil)
 
 	// Find
@@ -62,10 +66,13 @@ func TestAnimapi_DB_FindPrograms(t *testing.T) {
 	Expect(t, len(programs)).ToBe(0)
 }
 
-func getSamplePrograms() []model.Program {
+func getSamplePrograms() (programs []model.Program, since time.Duration) {
 	bytes := []byte(sampleResponse)
 	response, _ := infrastructure.ConvertBytes2Response(bytes)
-	return model.CreateProgramsFromSyobocalResponse(response)
+	programs = model.CreateProgramsFromSyobocalResponse(response)
+	diffSec := time.Now().Unix() - programs[0].Anime.LastUpdated
+	since, _ = time.ParseDuration("-" + strconv.FormatInt(diffSec+int64(1000), 10) + "s")
+	return
 }
 
 var sampleResponse = `
