@@ -5,7 +5,7 @@
 module:testrunner
 
 GET     /                                       App.Index
-GET     /doc                                    Doc.Index
+GET     /docs                                   Docs.Index
 GET     /anime                                  Anime.Index
 GET     /api/anime/:tid/anisongs                Anime.Anisongs
 

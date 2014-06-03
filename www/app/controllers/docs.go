@@ -2,10 +2,10 @@ package controllers
 
 import "github.com/revel/revel"
 
-type Doc struct {
+type Docs struct {
 	*revel.Controller
 }
 
-func (c Doc) Index() revel.Result {
+func (c Docs) Index() revel.Result {
 	return c.Render()
 }
