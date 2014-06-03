@@ -28,8 +28,3 @@ func (c Anime) Index() revel.Result {
 	}
 	return c.Render(songs)
 }
-
-func (c Anime) Anisongs(tid int) revel.Result {
-	anisongs := animapi.DB("./my.conf", "test").FindAnisongsByTID(tid)
-	return c.RenderJson(anisongs)
-}
