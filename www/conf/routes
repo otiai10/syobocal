@@ -5,6 +5,7 @@
 module:testrunner
 
 GET     /                                       App.Index
+GET     /doc                                    Doc.Index
 GET     /anime/:tid/anisongs                    Anime.Anisongs
 
 # Ignore favicon requests
