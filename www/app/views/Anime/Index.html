@@ -1,0 +1,11 @@
+{{template "partials/global/header.html" .}}
+
+<h1>animapi</h1>
+
+<table class="entries">
+{{range .songs}}
+  {{template "partials/anime/song.html" .}}
+{{end}}
+</table>
+
+{{template "partials/global/footer.html" .}}
