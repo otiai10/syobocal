@@ -14,9 +14,10 @@ type Song struct {
 }
 
 func (c Anime) Index() revel.Result {
-	since, _ := animapi.Since("-24h")
+	since, _ := animapi.Since("-12w")
 	var songs []Song
 	animes := animapi.DB("./my.conf", "test").FindAnimes(since)
+  revel.INFO.Println("???", animes)
 	for _, anime := range animes {
 		for _, anisong := range animapi.DB("./my.conf", "test").FindAnisongsByTID(anime.TID) {
 			song := Song{
