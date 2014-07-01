@@ -1,0 +1,29 @@
+[0;34m~
+~ revel! http://revel.github.io
+~
+[0m[0;32mINFO  2014/07/01 00:10:01 revel.go:320: Loaded module static
+[0m[0;32mINFO  2014/07/01 00:10:01 run.go:57: Running animapi.www (github.com/otiai10/animapi/www) in prod mode
+[0m[0;35mTRACE 2014/07/01 00:10:01 run.go:58: Base path: /home/otiai10/proj/go/packages/src/github.com/otiai10/animapi/www
+[0m[0;35mTRACE 2014/07/01 00:10:01 build.go:128: Exec: [/usr/bin/git --git-dir=/home/otiai10/proj/go/packages/src/github.com/otiai10/animapi/www/.git describe --always --dirty]
+[0m[0;33mWARN  2014/07/01 00:10:01 build.go:132: Cannot determine git repository version: exit status 128
+[0m[0;35mTRACE 2014/07/01 00:10:01 build.go:77: Exec: [/home/otiai10/proj/go/bin/go build -ldflags -X github.com/otiai10/animapi/www/app.APP_VERSION "" -tags  -o /home/otiai10/proj/go/packages/bin/www github.com/otiai10/animapi/www/app/tmp]
+[0m[0;35mTRACE 2014/07/01 00:10:03 app.go:77: Exec app: /home/otiai10/proj/go/packages/bin/www [/home/otiai10/proj/go/packages/bin/www -port=17000 -importPath=github.com/otiai10/animapi/www -runMode=prod]
+[0m[0;32mINFO  2014/07/01 00:10:03 revel.go:320: Loaded module static
+[0m[0;32mINFO  2014/07/01 00:10:03 main.go:26: Running revel server
+[0m[0;35mTRACE 2014/07/01 00:10:03 controller.go:375: Registered controller: App
+[0m[0;35mTRACE 2014/07/01 00:10:03 controller.go:375: Registered controller: Anime
+[0m[0;35mTRACE 2014/07/01 00:10:03 controller.go:375: Registered controller: Docs
+[0m[0;35mTRACE 2014/07/01 00:10:03 controller.go:375: Registered controller: Api
+[0m[0;35mTRACE 2014/07/01 00:10:03 controller.go:375: Registered controller: Static
+[0m[0;35mTRACE 2014/07/01 00:10:03 template.go:174: Refreshing templates from [/home/otiai10/proj/go/packages/src/github.com/otiai10/animapi/www/app/views /home/otiai10/proj/go/packages/src/github.com/revel/revel/templates]
+[0m[0;35mTRACE 2014/07/01 00:10:03 i18n.go:119: Successfully loaded messages from file sample.en
+[0m[0;32mINFO  2014/07/01 00:10:03 router.go:293: Skipping routes for inactive module testrunner
+[0m[0;31mERROR 2014/07/01 00:10:03 server.go:111: Failed to listen: listen tcp <nil>:17000: address already in use
+[0m[0;31mERROR 2014/07/01 00:10:03 app.go:79: Error running: exit status 1
+[0m[0;34m~
+~ revel! http://revel.github.io
+~
+[0m[0;34m~
+~ revel! http://revel.github.io
+~
+[0mListening on :17000...

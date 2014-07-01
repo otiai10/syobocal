@@ -5,10 +5,6 @@
 module:testrunner
 
 GET     /                                       App.Index
-GET     /docs                                   Docs.Index
-GET     /anime                                  Anime.Index
-GET     /api/anime                              Api.Animes
-GET     /api/anime/:tid/anisongs                Api.AnisongsByTid
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

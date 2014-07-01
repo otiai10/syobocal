@@ -1,14 +1,8 @@
-{{template "partials/global/header.html" .}}
+{{set . "title" "Home"}}
+{{template "header.html" .}}
 
-<h1>animapi（建設中）</h1>
+<div class="container">
 
-<ul>
-  <li>
-    <a href="/anime">今期のアニソン</a>
-  </li>
-  <li>
-    <a href="/docs">API Documentation</a>
-  </li>
-</ul>
+</div>
 
-{{template "partials/global/footer.html" .}}
+{{template "footer.html" .}}

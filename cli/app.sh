@@ -1,2 +1,2 @@
-pkill github.com/otiai10/animapi/www
+pkill animapi
 nohup revel run github.com/otiai10/animapi/www prod &
