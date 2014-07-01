@@ -37,7 +37,7 @@ func (table *AnimesTable) Add(tid int, title string, lastupdate int64, category 
 }
 func (table *AnimesTable) FindSince(snc time.Duration) (rows *sql.Rows, e error) {
 	lastUpdated := time.Now().Add(snc).Unix()
-	query := fmt.Sprintf("SELECT * FROM %s WHERE lastUpdated > ?", table.name)
+	query := fmt.Sprintf("SELECT * FROM %s WHERE lastUpdated > ? AND category = 1 ORDER BY lastUpdated DESC", table.name)
 	return table.db.Query(query, lastUpdated)
 }
 func (table *AnimesTable) Delete(tid int) (e error) {

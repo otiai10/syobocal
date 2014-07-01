@@ -5,6 +5,7 @@
 module:testrunner
 
 GET     /                                       App.Index
+GET     /a/:tid                                 App.Anime
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

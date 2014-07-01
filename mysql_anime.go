@@ -4,13 +4,17 @@ import "time"
 import "github.com/otiai10/animapi/model"
 import "github.com/otiai10/animapi/infrastructure"
 
+import "fmt"
+
 func (m *MySQL) FindAnimes(since time.Duration) (animes []model.Anime) {
 	table := infrastructure.NewAnimesTable(m.db)
 	if e := table.CreateIfNotExists(); e != nil {
+    fmt.Println("0001", e)
 		return
 	}
 	rows, e := table.FindSince(since)
 	if e != nil {
+    fmt.Println("0002", e)
 		return
 	}
 	return model.CreateAnimesFromMySQLResponse(rows)
