@@ -1,0 +1,11 @@
+language: go
+go:
+    - tip
+services:
+    - mysql
+before_script:
+    # TODO: to be replaced with "rake db:create"
+    - mysql -e 'create database animapi_test;'
+    - go get github.com/otiai10/mint
+script:
+    - go test -v ./...
