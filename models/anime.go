@@ -27,8 +27,8 @@ type Anime struct {
 type Song struct {
 	ID         int
 	AnimeID    int    `sql:"index"`
-	Seq        string `sql:"seq"`
 	Type       string `sql:"song_type"` // 基本的には"オープニング","エンディング"
+	Number     string `sql:"seq"`
 	Title      string
 	Attributes map[string]string
 }
@@ -37,5 +37,6 @@ type Song struct {
 type Program struct {
 	ID      int
 	AnimeID int `sql:"index"`
-	Seq     string
+	Title   string
+	Chapter string
 }

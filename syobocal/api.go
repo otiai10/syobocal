@@ -2,7 +2,6 @@ package syobocal
 
 import (
 	"encoding/xml"
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -39,7 +38,6 @@ func (client *Client) TitleLookup(term ...time.Time) (TitleLookupResponse, error
 	if err != nil {
 		return TitleLookupResponse{}, err
 	}
-	fmt.Println(res, err)
 
 	tlr := TitleLookupResponse{}
 	decoder := xml.NewDecoder(res.Body)

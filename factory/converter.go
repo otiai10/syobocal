@@ -10,11 +10,13 @@ import (
 
 var (
 	songHeader = regexp.MustCompile("^\\*(オープニングテーマ|エンディングテーマ|挿入歌)([0-9]*)「(.+)」")
+	subtitle   = regexp.MustCompile("^\\*(.+)\\*(.+)")
 )
 
 // ConvertTitleLookupResponseToAnime syobocalパッケージのTitleLookupResponseをanimapi/modelsパッケージのAnimeに変換します.
 func ConvertTitleLookupResponseToAnime(tlr syobocal.TitleLookupResponse) ([]*models.Anime, error) {
 	animes := []*models.Anime{}
+	// TODO: separate by items
 	for _, item := range tlr.TitleItems.Items {
 		anime := &models.Anime{
 			ID:         item.TID,
@@ -23,6 +25,7 @@ func ConvertTitleLookupResponseToAnime(tlr syobocal.TitleLookupResponse) ([]*mod
 			CommentRaw: item.Comment,
 			Category:   models.Category(item.Category),
 			Songs:      parseRawComment(item.TID, item.Comment),
+			Programs:   parseRawSubTitles(item.TID, item.SubTitles),
 		}
 		animes = append(animes, anime)
 	}
@@ -33,8 +36,7 @@ func ConvertTitleLookupResponseToAnime(tlr syobocal.TitleLookupResponse) ([]*mod
 // フィールドを1行1行解釈して、songsを作っていく
 // 将来的にはsongs以外も返す？
 func parseRawComment(animeID int, raw string) []models.Song {
-	b := []byte(raw)
-	rows := bytes.Split(b, []byte("\n"))
+	rows := bytes.Split([]byte(raw), []byte("\n"))
 	songs := []models.Song{}
 	f := false
 	for _, row := range rows {
@@ -58,11 +60,29 @@ func parseRawComment(animeID int, raw string) []models.Song {
 		song := models.Song{
 			AnimeID:    animeID,
 			Type:       string(matches[0][1]),
-			Seq:        string(matches[0][2]),
+			Number:     string(matches[0][2]),
 			Title:      string(matches[0][3]),
 			Attributes: map[string]string{},
 		}
 		songs = append(songs, song)
 	}
 	return songs
+}
+
+// parseRawSubTitles Subtitles
+func parseRawSubTitles(animeID int, raw string) []models.Program {
+	programs := []models.Program{}
+	for _, row := range bytes.Split([]byte(raw), []byte("\n")) {
+		matches := subtitle.FindAllSubmatch(row, -1)
+		if len(matches) < 1 {
+			continue
+		}
+		program := models.Program{
+			AnimeID: animeID,
+			Chapter: string(matches[0][1]),
+			Title:   string(matches[0][2]),
+		}
+		programs = append(programs, program)
+	}
+	return programs
 }
