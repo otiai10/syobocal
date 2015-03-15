@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"regexp"
 	"strings"
+	"time"
 
+	"github.com/go-sql-driver/mysql"
 	"github.com/otiai10/animapi/models"
 	"github.com/otiai10/animapi/syobocal"
 )
@@ -28,6 +30,13 @@ func ConvertTitleLookupResponseToAnime(tlr syobocal.TitleLookupResponse) ([]*mod
 			Songs:      parseRawComment(item.TID, item.Comment),
 			Programs:   parseRawSubTitles(item.TID, item.SubTitles),
 			Keywords:   strings.Split(item.Keywords, ","),
+			FirstBroadcast: time.Date(
+				item.FirstYear.Value, time.Month(item.FirstMonth.Value), 1, 0, 0, 0, 0, time.UTC,
+			),
+			FirstEnded: mysql.NullTime{
+				Time:  time.Date(item.FirstEndYear.Value, time.Month(item.FirstEndMonth.Value), 1, 0, 0, 0, 0, time.UTC),
+				Valid: !(item.FirstEndYear.Value == 0 || item.FirstEndMonth.Value == 0),
+			},
 		}
 		animes = append(animes, anime)
 	}

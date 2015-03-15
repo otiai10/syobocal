@@ -56,7 +56,7 @@ func (t *syoboiTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	return nil
 }
 
-type syoboiInt struct{ int }
+type syoboiInt struct{ Value int }
 
 func (i *syoboiInt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	var val string

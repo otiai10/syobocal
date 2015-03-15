@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/otiai10/animapi/syobocal"
 	. "github.com/otiai10/mint"
@@ -20,9 +21,13 @@ func TestConvertTitleLookupResponseToAnime(t *testing.T) {
 
 	Expect(t, animes[2].Title).ToBe("SHIROBAKO")
 	Expect(t, animes[2].ID).ToBe(SHIROBAKO)
+	Expect(t, animes[2].FirstBroadcast).ToBe(time.Date(2014, time.October, 1, 0, 0, 0, 0, time.UTC))
 
 	Expect(t, animes[1].Title).ToBe("東京喰種トーキョーグール√A")
 	Expect(t, animes[1].Keywords).Deeply().ToBe([]string{"東京喰種トーキョーグール", "wikipedia:東京喰種トーキョーグール"})
+	Expect(t, animes[1].FirstEnded.Time).ToBe(time.Date(2015, time.March, 1, 0, 0, 0, 0, time.UTC))
+
+	Expect(t, animes[0].FirstEnded.Valid).ToBe(false)
 }
 
 func TestParseRawComment(t *testing.T) {
