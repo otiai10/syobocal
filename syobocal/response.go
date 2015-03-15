@@ -20,7 +20,7 @@ type TitleLookupResponse struct {
 
 // TitleItem ...
 type TitleItem struct {
-	TID           string     `xml:"TID"`           // アニメタイトルID
+	TID           int        `xml:"TID"`           // アニメタイトルID
 	LastUpdate    syoboiTime `xml:"LastUpdate"`    // 最近更新された時間
 	Title         string     `xml:"Title"`         // アニメタイトル
 	ShortTitle    string     `xml:"ShortTitle"`    // タイトルの省略形
@@ -40,7 +40,7 @@ type TitleItem struct {
 	SubTitles     string     `xml:"SubTitles"`     // 各放映話のサブタイトル（改行区切り？）
 }
 
-type syoboiTime struct{ time.Time }
+type syoboiTime struct{ Value time.Time }
 
 func (t *syoboiTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	const format = "2006-01-02 15:04:05"

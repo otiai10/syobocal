@@ -3,7 +3,6 @@ package syobocal
 import (
 	"fmt"
 	"testing"
-	"time"
 
 	. "github.com/otiai10/mint"
 )
@@ -17,7 +16,7 @@ func TestClient(t *testing.T) {
 func TestClient_TitleLookup(t *testing.T) {
 	Expect(t, true).ToBe(true)
 	client := NewClient()
-	res, err := client.TitleLookup(time.Now(), time.Now())
+	res, err := client.TitleLookup()
 
 	fmt.Printf("%+v\n", res)
 

@@ -30,8 +30,11 @@ func NewClient() *Client {
 }
 
 // TitleLookup ...
+// @param term []time.Time
+// 		term[0] == "lookup term from" optional default "3 days ago"
+// 		term[1] == "lookup term to"   optional default ~
 // ex) http://cal.syoboi.jp/db.php?Command=TitleLookup&TID=*&LastUpdate=20150315_000000-
-func (client *Client) TitleLookup(from, to time.Time) (TitleLookupResponse, error) {
+func (client *Client) TitleLookup(term ...time.Time) (TitleLookupResponse, error) {
 	res, err := http.Get("http://cal.syoboi.jp/db.php?Command=TitleLookup&TID=*&LastUpdate=20150315_000000-")
 	if err != nil {
 		return TitleLookupResponse{}, err
