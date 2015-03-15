@@ -20,6 +20,9 @@ func TestConvertTitleLookupResponseToAnime(t *testing.T) {
 
 	Expect(t, animes[2].Title).ToBe("SHIROBAKO")
 	Expect(t, animes[2].ID).ToBe(SHIROBAKO)
+
+	Expect(t, animes[1].Title).ToBe("東京喰種トーキョーグール√A")
+	Expect(t, animes[1].Keywords).Deeply().ToBe([]string{"東京喰種トーキョーグール", "wikipedia:東京喰種トーキョーグール"})
 }
 
 func TestParseRawComment(t *testing.T) {

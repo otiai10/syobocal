@@ -3,6 +3,7 @@ package factory
 import (
 	"bytes"
 	"regexp"
+	"strings"
 
 	"github.com/otiai10/animapi/models"
 	"github.com/otiai10/animapi/syobocal"
@@ -26,6 +27,7 @@ func ConvertTitleLookupResponseToAnime(tlr syobocal.TitleLookupResponse) ([]*mod
 			Category:   models.Category(item.Category),
 			Songs:      parseRawComment(item.TID, item.Comment),
 			Programs:   parseRawSubTitles(item.TID, item.SubTitles),
+			Keywords:   strings.Split(item.Keywords, ","),
 		}
 		animes = append(animes, anime)
 	}
