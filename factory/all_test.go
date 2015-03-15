@@ -12,6 +12,16 @@ import (
 
 const SHIROBAKO = 3524
 
+func TestConvertTitleLookupResponseToAnime(t *testing.T) {
+	res := fixtureResponse("../sample.xml")
+	animes, err := ConvertTitleLookupResponseToAnime(res)
+	Expect(t, err).ToBe(nil)
+	Expect(t, len(animes)).ToBe(4)
+
+	Expect(t, animes[2].Title).ToBe("SHIROBAKO")
+	Expect(t, animes[2].ID).ToBe(SHIROBAKO)
+}
+
 func TestParseRawComment(t *testing.T) {
 
 	res := fixtureResponse("../sample.xml")
