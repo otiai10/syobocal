@@ -27,7 +27,7 @@ type TestConfig struct{}
 
 // MySQL to implement Config interface.
 func (c TestConfig) MySQL() string {
-	return "foo:bar@"
+	return "travis@"
 }
 
 // DBName to implement Config interface.
