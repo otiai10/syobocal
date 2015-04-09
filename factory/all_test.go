@@ -14,7 +14,7 @@ import (
 const SHIROBAKO = 3524
 
 func TestConvertTitleLookupResponseToAnime(t *testing.T) {
-	res := fixtureResponse("../sample.xml")
+	res := fixtureResponse("./sample.xml")
 	animes, err := ConvertTitleLookupResponseToAnime(res)
 	Expect(t, err).ToBe(nil)
 	Expect(t, len(animes)).ToBe(4)
@@ -32,7 +32,7 @@ func TestConvertTitleLookupResponseToAnime(t *testing.T) {
 
 func TestParseRawComment(t *testing.T) {
 
-	res := fixtureResponse("../sample.xml")
+	res := fixtureResponse("./sample.xml")
 
 	songs := parseRawComment(res.TitleItems.Items[2].TID, res.TitleItems.Items[2].Comment)
 	Expect(t, len(songs)).ToBe(6)
@@ -45,7 +45,7 @@ func TestParseRawComment(t *testing.T) {
 
 func TestParseRawSubTitles(t *testing.T) {
 
-	res := fixtureResponse("../sample.xml")
+	res := fixtureResponse("./sample.xml")
 
 	programs := parseRawSubTitles(res.TitleItems.Items[2].TID, res.TitleItems.Items[2].SubTitles)
 	Expect(t, len(programs)).ToBe(23)
