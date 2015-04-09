@@ -14,6 +14,10 @@ import (
 
 var _dbmap *gorp.DbMap
 
+func init() {
+	config.Init("test")
+}
+
 func TestMain(m *testing.M) {
 	up()
 	ret := m.Run()
@@ -22,14 +26,13 @@ func TestMain(m *testing.M) {
 }
 
 func up() {
-	config.Init("test")
 	db, err := sql.Open("mysql", config.Values.MySQL()+"/")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("up1", err)
 	}
 	_, err = db.Exec(fmt.Sprintf("DROP DATABASE IF EXISTS %s", config.Values.DBName()))
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("up2", err)
 	}
 	_dbmap = Init(config.Values.MySQL(), config.Values.DBName())
 }
