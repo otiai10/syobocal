@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"gopkg.in/gorp.v1"
 )
 
 // Category しょぼかるといっしょ.
@@ -11,24 +12,24 @@ type Category int
 
 // Anime アニメです.
 type Anime struct {
-	ID             int            `sql:"id,not null;unique" syobocal:"TID"`
-	UpdatedAt      time.Time      `sql:"updated_at" syobocal:"LastUpdated"`
-	Title          string         `sql:"title,not null;unique" syobocal:"Title"`
-	CommentRaw     string         `syobocal:"Comment"`
-	Category       Category       `syobocal:"Category"`
-	FirstBroadcast time.Time      `syobocal:"FirtYear_FirstMonth"`
-	FirstEnded     mysql.NullTime `sql:"default null" syobocal:"FirstEndYear_FirstEndMonth"`
-	Keywords       []string       `syobocal:"Keywords,_comma_splitted"`
-	Songs          []Song
-	Programs       []Program
+	ID             int            `db:"id" syobocal:"TID"`
+	UpdatedAt      time.Time      `db:"updated_at" syobocal:"LastUpdated"`
+	Title          string         `db:"title" syobocal:"Title"`
+	CommentRaw     string         `db:"comment" syobocal:"Comment"`
+	Category       Category       `db:"category" syobocal:"Category"`
+	FirstBroadcast time.Time      `db:"first_broadcast" syobocal:"FirtYear_FirstMonth"`
+	FirstEnded     mysql.NullTime `db:"first_ended" syobocal:"FirstEndYear_FirstEndMonth"`
+	Keywords       []string       `db:"-" syobocal:"Keywords,_comma_splitted"`
+	Songs          []Song         `db:"-"`
+	Programs       []Program      `db:"-"`
 }
 
 // Song アニソン的な.
 type Song struct {
 	ID         int
-	AnimeID    int    `sql:"index"`
-	Type       string `sql:"song_type"` // 基本的には"オープニング","エンディング"
-	Number     string `sql:"seq"`
+	AnimeID    int    `db:"index"`
+	Type       string `db:"song_type"` // 基本的には"オープニング","エンディング"
+	Number     string `db:"seq"`
 	Title      string
 	Attributes map[string]string
 }
@@ -36,7 +37,12 @@ type Song struct {
 // Program しょぼかるのProgに相当.
 type Program struct {
 	ID      int
-	AnimeID int `sql:"index"`
+	AnimeID int `db:"index"`
 	Title   string
 	Chapter string
+}
+
+// Save ...
+func (anime *Anime) Save(db *gorp.DbMap) error {
+	return db.Insert(anime)
 }
