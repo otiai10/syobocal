@@ -7,9 +7,6 @@ import (
 	"gopkg.in/gorp.v1"
 )
 
-// Category しょぼかるといっしょ.
-type Category int
-
 // Anime アニメです.
 type Anime struct {
 	ID             int            `db:"id" syobocal:"TID"`
@@ -22,24 +19,6 @@ type Anime struct {
 	Keywords       []string       `db:"-" syobocal:"Keywords,_comma_splitted"`
 	Songs          []Song         `db:"-"`
 	Programs       []Program      `db:"-"`
-}
-
-// Song アニソン的な.
-type Song struct {
-	ID         int
-	AnimeID    int    `db:"index"`
-	Type       string `db:"song_type"` // 基本的には"オープニング","エンディング"
-	Number     string `db:"seq"`
-	Title      string
-	Attributes map[string]string
-}
-
-// Program しょぼかるのProgに相当.
-type Program struct {
-	ID      int
-	AnimeID int `db:"index"`
-	Title   string
-	Chapter string
 }
 
 // Save ...
