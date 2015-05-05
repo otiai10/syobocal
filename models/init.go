@@ -15,7 +15,7 @@ const (
 	createdatabase = "CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET utf8"
 )
 
-// Init ...
+// Init データベースを初期化するし、gorp的にテーブルつくる
 func Init(mysqlURI string, databasename string) *gorp.DbMap {
 
 	db, err := sql.Open("mysql", mysqlURI+"/")
