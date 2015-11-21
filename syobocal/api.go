@@ -58,8 +58,14 @@ func NewClient(ss ...Service) *Client {
 }
 
 // TitleLookup Commandのセッター
-func (client *Client) TitleLookup() *Client {
+func (client *Client) TitleLookup(tt ...time.Time) *Client {
 	client.Query.Add("Command", CommandTitleLookup)
+	if len(tt) > 1 {
+		client.to = tt[1]
+	}
+	if len(tt) > 0 {
+		client.from = tt[0]
+	}
 	return client
 }
 
@@ -100,15 +106,28 @@ func (client *Client) getURL() string {
 }
 
 // Do ...
-func (client *Client) Do(term ...time.Time) (TitleLookupResponse, error) {
+func (client *Client) Do(term ...time.Time) (*TitleLookupResponse, error) {
 	res, err := http.Get(client.getURL())
 	if err != nil {
-		return TitleLookupResponse{}, err
+		return nil, err
 	}
-	tlr := TitleLookupResponse{}
+	defer res.Body.Close()
+	if res.StatusCode != 200 {
+		return nil, fmt.Errorf(res.Status)
+	}
+	tlr := new(TitleLookupResponse)
 	decoder := xml.NewDecoder(res.Body)
-	if err := decoder.Decode(&tlr); err != nil {
-		return tlr, err
+	if err := decoder.Decode(tlr); err != nil {
+		return nil, err
+	}
+	if tlr.Code != 0 {
+		tlr.Result.Code = tlr.Code
+	}
+	if tlr.Message != "" {
+		tlr.Result.Message = tlr.Message
+	}
+	if tlr.TitleItems.Items == nil {
+		tlr.TitleItems.Items = []TitleItem{}
 	}
 	return tlr, nil
 }

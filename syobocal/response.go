@@ -9,7 +9,9 @@ import (
 // TitleLookupResponse reporesents xml:TitleLookupResponse.
 // ex) http://cal.syoboi.jp/db.php?Command=TitleLookup&TID=*&LastUpdate=20150315_000000-
 type TitleLookupResponse struct {
-	Result struct {
+	Code    int    `xml:"Code"`    // Commandが無い場合などはここに入ることもあるw
+	Message string `xml:"Message"` // Commandが無い場合などはここに入ることもあるw
+	Result  struct {
 		Code    int    `xml:"Code"`
 		Message string `xml:"Message"`
 	} `xml:"Result"`
