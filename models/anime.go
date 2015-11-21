@@ -9,16 +9,18 @@ import (
 
 // Anime アニメです.
 type Anime struct {
-	ID             int            `db:"id" syobocal:"TID"`
-	UpdatedAt      time.Time      `db:"updated_at" syobocal:"LastUpdated"`
-	Title          string         `db:"title" syobocal:"Title"`
-	CommentRaw     string         `db:"comment" syobocal:"Comment"`
-	Category       Category       `db:"category" syobocal:"Category"`
-	FirstBroadcast time.Time      `db:"first_broadcast" syobocal:"FirtYear_FirstMonth"`
-	FirstEnded     mysql.NullTime `db:"first_ended" syobocal:"FirstEndYear_FirstEndMonth"`
-	Keywords       []string       `db:"-" syobocal:"Keywords,_comma_splitted"`
-	Songs          []Song         `db:"-"`
-	Programs       []Program      `db:"-"`
+	ID             int            `json:"id" gorm:"column:id;primary_key" sql:"UNIQUE;AUTO_INCREMENT:NO;NOT NULL"` // しょぼかる的なIDを入れる
+	CreatedAt      time.Time      // レコードのcreated_at
+	UpdatedAt      time.Time      // レコードのupdated_at
+	Title          string         // アニメタイトル
+	CommentRaw     string         // コメント（生）
+	Category       Category       // カテゴリー
+	FirstBroadcast time.Time      // 最初に放映された時間
+	FirstEnded     mysql.NullTime // 最初に放映終了した時間
+	Keywords       []string       `sql:"-"` // しょぼかる的にはKeywords
+	Songs          []*Song        `sql:"-"` // しょぼかる的にはCommentに入ってる
+	Programs       []*Program     `sql:"-"` // しょぼかる的にはSubTitlesとよばれている
+	Links          []*Link        `sql:"-"` // しょぼかる的にはCommentに入ってる
 }
 
 // Save ...

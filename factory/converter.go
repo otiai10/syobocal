@@ -46,9 +46,9 @@ func ConvertTitleLookupResponseToAnime(tlr syobocal.TitleLookupResponse) ([]*mod
 // parseRawComment Comment
 // フィールドを1行1行解釈して、songsを作っていく
 // 将来的にはsongs以外も返す？
-func parseRawComment(animeID int, raw string) []models.Song {
+func parseRawComment(animeID int, raw string) []*models.Song {
 	rows := bytes.Split([]byte(raw), []byte("\n"))
-	songs := []models.Song{}
+	songs := []*models.Song{}
 	f := false
 	for _, row := range rows {
 		if len(row) == 0 {
@@ -68,7 +68,7 @@ func parseRawComment(animeID int, raw string) []models.Song {
 			continue
 		}
 		f = true
-		song := models.Song{
+		song := &models.Song{
 			AnimeID:    animeID,
 			Type:       string(matches[0][1]),
 			Number:     string(matches[0][2]),
@@ -81,14 +81,14 @@ func parseRawComment(animeID int, raw string) []models.Song {
 }
 
 // parseRawSubTitles Subtitles
-func parseRawSubTitles(animeID int, raw string) []models.Program {
-	programs := []models.Program{}
+func parseRawSubTitles(animeID int, raw string) []*models.Program {
+	programs := []*models.Program{}
 	for _, row := range bytes.Split([]byte(raw), []byte("\n")) {
 		matches := subtitle.FindAllSubmatch(row, -1)
 		if len(matches) < 1 {
 			continue
 		}
-		program := models.Program{
+		program := &models.Program{
 			AnimeID: animeID,
 			Chapter: string(matches[0][1]),
 			Title:   string(matches[0][2]),

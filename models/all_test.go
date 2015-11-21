@@ -1,18 +1,14 @@
 package models
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"testing"
 
+	"github.com/jinzhu/gorm"
 	"github.com/otiai10/animapi/config"
 	. "github.com/otiai10/mint"
-	"gopkg.in/gorp.v1"
 )
-
-var _dbmap *gorp.DbMap
 
 func init() {
 	config.Init("test")
@@ -26,15 +22,14 @@ func TestMain(m *testing.M) {
 }
 
 func up() {
-	db, err := sql.Open("mysql", config.Values.MySQL()+"/")
+	db, err := gorm.Open("mysql", config.Values.MySQL()+"/"+config.Values.DBName())
 	if err != nil {
-		log.Fatalln("up1", err)
+		log.Fatalln("up", err)
 	}
-	_, err = db.Exec(fmt.Sprintf("DROP DATABASE IF EXISTS %s", config.Values.DBName()))
-	if err != nil {
-		log.Fatalln("up2", err)
-	}
-	_dbmap = Init(config.Values.MySQL(), config.Values.DBName())
+	db.LogMode(true)
+	db.DropTable(&Anime{})
+
+	Init(db)
 }
 
 func down() {
@@ -47,6 +42,7 @@ func TestInit(t *testing.T) {
 		ID:    1000,
 		Title: "SHIROBAKO",
 	}
-	err := anime.Save(_dbmap)
+	db := DB()
+	err := db.Create(anime).Error
 	Expect(t, err).ToBe(nil)
 }
