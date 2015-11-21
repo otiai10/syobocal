@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
-	"gopkg.in/gorp.v1"
 )
 
 // Anime アニメです.
@@ -21,9 +20,4 @@ type Anime struct {
 	Songs          []*Song        `sql:"-"` // しょぼかる的にはCommentに入ってる
 	Programs       []*Program     `sql:"-"` // しょぼかる的にはSubTitlesとよばれている
 	Links          []*Link        `sql:"-"` // しょぼかる的にはCommentに入ってる
-}
-
-// Save ...
-func (anime *Anime) Save(db *gorp.DbMap) error {
-	return db.Insert(anime)
 }
