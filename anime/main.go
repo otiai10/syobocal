@@ -2,25 +2,20 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"os"
 
-	"github.com/otiai10/anime"
-	"github.com/otiai10/anime/syobocal"
+	"github.com/urfave/cli"
 )
 
 func main() {
-	client := syobocal.NewClient()
-	from := time.Now().Add(-17 * time.Hour)
-	client.LastUpdated(&from, nil)
-	res, err := client.Lookup()
+	app := cli.NewApp()
+	app.Commands = []cli.Command{
+		TitleSearch,
+		SongSearch,
+	}
+	err := app.Run(os.Args)
 	if err != nil {
-		fmt.Println(err, client.Build())
-		return
+		fmt.Println(err)
+		os.Exit(1)
 	}
-	if len(res.TitleItems.Items) == 0 {
-		return
-	}
-	info, err := anime.ParseComment(res.TitleItems.Items[0].Comment)
-	fmt.Println(err)
-	fmt.Printf("%+v\n", info)
 }

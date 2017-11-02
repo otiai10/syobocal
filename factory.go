@@ -1,9 +1,11 @@
 package anime
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
+	"time"
+
+	"github.com/otiai10/anime/syobocal"
 )
 
 var (
@@ -34,7 +36,6 @@ type Token struct {
 
 // Type ...
 func (t *Token) Type() string {
-	fmt.Println(t.Header)
 	if SongExpression.MatchString(t.Header) {
 		return "song"
 	}
@@ -48,7 +49,7 @@ func (t *Token) Type() string {
 }
 
 // ParseComment ...
-func ParseComment(raw string) (*Info, error) {
+func ParseComment(raw string, parent *Anime) (*Info, error) {
 	info := new(Info)
 	info.Staff = map[string][]string{}
 
@@ -76,7 +77,7 @@ func ParseComment(raw string) (*Info, error) {
 	for _, token := range tokens {
 		switch token.Type() {
 		case "song":
-			info.Songs = append(info.Songs, CreateSong(token))
+			info.Songs = append(info.Songs, CreateSong(token, parent))
 		case "staff":
 			info.Staff = CreateStaff(token)
 		case "cast":
@@ -88,8 +89,10 @@ func ParseComment(raw string) (*Info, error) {
 }
 
 // CreateSong ...
-func CreateSong(t *Token) Song {
-	song := Song{}
+func CreateSong(t *Token, parent *Anime) Song {
+	song := Song{
+		Anime: parent.Title,
+	}
 	matched := SongExpression.FindAllStringSubmatch(t.Header, -1)
 	for i, name := range SongExpression.SubexpNames() {
 		switch name {
@@ -177,4 +180,29 @@ func CreateCast(t *Token) map[string][]string {
 		cast[chara] = strings.Split(name, "、")
 	}
 	return cast
+}
+
+// CreateAnimeListFromSyobocalResponse しょぼかるのレスポンスからAnimeレコードにする。
+func CreateAnimeListFromSyobocalResponse(res *syobocal.TitleLookupResponse) ([]*Anime, error) {
+	loc, err := time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		return nil, err
+	}
+	animes := []*Anime{}
+	for _, item := range res.TitleItems.Items {
+		anime := &Anime{
+			SID:   item.TID,
+			Title: item.Title,
+		}
+		info, err := ParseComment(item.Comment, anime)
+		if err != nil {
+			return nil, err
+		}
+		anime.Songs = info.Songs
+		anime.Cast = info.Cast
+		anime.Staff = info.Staff
+		anime.LastUpdated = time.Time(item.LastUpdate).In(loc)
+		animes = append(animes, anime)
+	}
+	return animes, nil
 }
