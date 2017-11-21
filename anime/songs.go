@@ -1,11 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/otiai10/anime"
+	"github.com/otiai10/jsonindent"
 	"github.com/urfave/cli"
 )
 
@@ -14,13 +16,53 @@ var SongSearch = cli.Command{
 	Name:    "songs",
 	Aliases: []string{"s"},
 	Flags: []cli.Flag{
+		cli.StringFlag{
+			Name:  "format,f",
+			Usage: "Output format, either [json, csv, tsv] or [pretty] as default",
+		},
+		cli.StringFlag{
+			Name:  "since,s",
+			Usage: "Start of time to search",
+		},
+		cli.StringFlag{
+			Name:  "until,u",
+			Usage: "End of time to search",
+		},
 		cli.BoolFlag{
-			Name: "dump,D",
+			Name:  "verbose,v",
+			Usage: "Show verbose log",
+		},
+		cli.StringFlag{
+			Name:  "timeformat",
+			Usage: "Time format for `since` and `until`",
+			Value: "YYYY-MM-dd",
 		},
 	},
 	Action: func(ctx *cli.Context) error {
+
+		timeformat := strings.Replace(ctx.String("timeformat"), "YYYY", "2006", -1)
+		timeformat = strings.Replace(timeformat, "MM", "01", -1)
+		timeformat = strings.Replace(timeformat, "dd", "02", -1)
+
+		term := []time.Time{}
+		if s := ctx.String("since"); s != "" {
+			t, err := time.Parse(timeformat, s)
+			if err != nil {
+				return err
+			}
+			term = append(term, t)
+		}
+		if u := ctx.String("until"); u != "" && len(term) != 0 {
+			t, err := time.Parse(timeformat, u)
+			if err != nil {
+				return err
+			}
+			term = append(term, t)
+		}
+
 		client := anime.NewClient()
-		animes, err := client.Lookup()
+		client.Verbose = ctx.Bool("verbose")
+		animes, err := client.Lookup(term...)
 		if err != nil {
 			return err
 		}
@@ -30,16 +72,23 @@ var SongSearch = cli.Command{
 			songs = append(songs, anime.Songs...)
 		}
 
-		if ctx.Bool("dump") {
-			e := json.NewEncoder(os.Stdout)
-			e.SetIndent("", "\t")
-			return e.Encode(songs)
+		switch ctx.String("format") {
+		case "json":
+			return jsonindent.NewEncoder(os.Stdout).Encode(songs)
+		case "csv":
+			return outputAsRowOrientedDataFormat(songs, "%[1]s,%[2]s,%[3]s")
+		case "tsv":
+			return outputAsRowOrientedDataFormat(songs, "%[1]s\t%[2]s\t%[3]s")
+		default:
+			return outputAsRowOrientedDataFormat(songs, "%[1]s (%[2]s) / %[3]s")
 		}
 
-		for _, song := range songs {
-			fmt.Printf("%s / %s\n", song.Title, song.Anime)
-		}
-
-		return nil
 	},
+}
+
+func outputAsRowOrientedDataFormat(songs []anime.Song, format string) error {
+	for _, song := range songs {
+		fmt.Printf(format+"\n", song.Anime, song.Label, song.Title)
+	}
+	return nil
 }

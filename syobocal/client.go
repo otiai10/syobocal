@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -21,6 +22,7 @@ type Client struct {
 	BaseURL         string
 	LastUpdatedFrom *time.Time
 	LastUpdatedTo   *time.Time
+	Verbose         bool
 }
 
 // NewClient ...
@@ -29,6 +31,17 @@ func NewClient() *Client {
 		HTTPClient: http.DefaultClient,
 		BaseURL:    BaseURL,
 	}
+}
+
+// Log ...
+func (c *Client) Log(format string, v ...interface{}) {
+	if !c.Verbose {
+		return
+	}
+	if !strings.HasSuffix(format, "\n") {
+		format += "\n"
+	}
+	fmt.Printf(format, v...)
 }
 
 // Lookup ...
@@ -40,6 +53,8 @@ func (c *Client) Lookup() (*TitleLookupResponse, error) {
 		c.HTTPClient = http.DefaultClient
 	}
 	req, err := http.NewRequest("GET", c.Build(), nil)
+	c.Log("REQUEST URL:\t%s", req.URL.String())
+	c.Log(">>>\n\n")
 	if err != nil {
 		return nil, err
 	}
@@ -96,5 +111,7 @@ func (c *Client) BuildLastUpdated() string {
 	if c.LastUpdatedTo != nil {
 		to = c.LastUpdatedTo.Format(format)
 	}
+	c.Log("SEARCH SINCE:\t%s", from)
+	c.Log("SEARCH UNTIL:\t%s", to)
 	return fmt.Sprintf("%s-%s", from, to)
 }
