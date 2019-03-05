@@ -1,0 +1,4 @@
+github.com/otiai10/jsonindent v0.0.0-20171116142732-447bf004320b h1:JGcPciE6TK8hKJO/M9desprAwpoNbvNMmRfTbPOhLWY=
+github.com/otiai10/jsonindent v0.0.0-20171116142732-447bf004320b/go.mod h1:SXIpH2WO0dyF5YBc6Iq8jc8TEJYe1Fk2Rc1EVYUdIgY=
+github.com/urfave/cli v1.20.0 h1:fDqGv3UG/4jbVl/QkFwEdddtEDjh/5Ov6X+0B/3bPaw=
+github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
