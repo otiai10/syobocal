@@ -1,11 +1,10 @@
-package anime
+package factory
 
 import (
 	"regexp"
 	"strings"
-	"time"
 
-	"github.com/otiai10/anime/syobocal"
+	"github.com/otiai10/syobocal/models"
 )
 
 var (
@@ -49,8 +48,8 @@ func (t *Token) Type() string {
 }
 
 // ParseComment ...
-func ParseComment(raw string, parent *Anime) (*Info, error) {
-	info := new(Info)
+func ParseComment(raw string, parent *models.Anime) (*models.Info, error) {
+	info := new(models.Info)
 	info.Staff = map[string][]string{}
 
 	// Parse sections to Token
@@ -77,20 +76,19 @@ func ParseComment(raw string, parent *Anime) (*Info, error) {
 	for _, token := range tokens {
 		switch token.Type() {
 		case "song":
-			info.Songs = append(info.Songs, CreateSong(token, parent))
+			info.Songs = append(info.Songs, createSong(token, parent))
 		case "staff":
-			info.Staff = CreateStaff(token)
+			info.Staff = createStaff(token)
 		case "cast":
-			info.Cast = CreateCast(token)
+			info.Cast = createCast(token)
 		}
 	}
 
 	return info, nil
 }
 
-// CreateSong ...
-func CreateSong(t *Token, parent *Anime) Song {
-	song := Song{
+func createSong(t *Token, parent *models.Anime) models.Song {
+	song := models.Song{
 		Anime: parent.Title,
 	}
 	matched := SongExpression.FindAllStringSubmatch(t.Header, -1)
@@ -138,8 +136,7 @@ func CreateSong(t *Token, parent *Anime) Song {
 	return song
 }
 
-// CreateStaff ...
-func CreateStaff(t *Token) map[string][]string {
+func createStaff(t *Token) map[string][]string {
 	staff := map[string][]string{}
 	for _, line := range t.Lines {
 		match := StaffRoleExpression.FindAllStringSubmatch(line, -1)
@@ -160,8 +157,7 @@ func CreateStaff(t *Token) map[string][]string {
 	return staff
 }
 
-// CreateCast ...
-func CreateCast(t *Token) map[string][]string {
+func createCast(t *Token) map[string][]string {
 	cast := map[string][]string{}
 	for _, line := range t.Lines {
 		match := CastCharacterExpression.FindAllStringSubmatch(line, -1)
@@ -180,29 +176,4 @@ func CreateCast(t *Token) map[string][]string {
 		cast[chara] = strings.Split(name, "、")
 	}
 	return cast
-}
-
-// CreateAnimeListFromSyobocalResponse しょぼかるのレスポンスからAnimeレコードにする。
-func CreateAnimeListFromSyobocalResponse(res *syobocal.TitleLookupResponse) ([]*Anime, error) {
-	loc, err := time.LoadLocation("Asia/Tokyo")
-	if err != nil {
-		return nil, err
-	}
-	animes := []*Anime{}
-	for _, item := range res.TitleItems.Items {
-		anime := &Anime{
-			SID:   item.TID,
-			Title: item.Title,
-		}
-		info, err := ParseComment(item.Comment, anime)
-		if err != nil {
-			return nil, err
-		}
-		anime.Songs = info.Songs
-		anime.Cast = info.Cast
-		anime.Staff = info.Staff
-		anime.LastUpdated = time.Time(item.LastUpdate).In(loc)
-		animes = append(animes, anime)
-	}
-	return animes, nil
 }
