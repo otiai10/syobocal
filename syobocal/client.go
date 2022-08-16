@@ -22,6 +22,7 @@ type Client struct {
 	BaseURL         string
 	LastUpdatedFrom *time.Time
 	LastUpdatedTo   *time.Time
+	Category        Category
 	Verbose         bool
 }
 
@@ -97,6 +98,11 @@ func (c *Client) Query() url.Values {
 	v.Add("Command", "TitleLookup")
 	v.Add("TID", "*")
 	v.Add("LastUpdate", c.BuildLastUpdated())
+	if c.Category > 0 { // FIXME: これだと Category == 0 に対応できてないですよ
+		v.Add("Category", fmt.Sprintf("%d", c.Category))
+	} else {
+		v.Add("Category", fmt.Sprintf("%d", 1))
+	}
 	return v
 }
 
