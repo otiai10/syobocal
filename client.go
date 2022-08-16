@@ -27,8 +27,8 @@ func (c *Client) Lookup(term ...time.Time) ([]*Anime, error) {
 		from = term[0]
 	}
 	var to *time.Time
-	if len(term) > 1 && term[2].Before(from) {
-		to = &term[2]
+	if len(term) > 1 && term[1].Before(from) {
+		to = &term[1]
 	}
 
 	if c.HTTPClient == nil {
