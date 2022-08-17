@@ -80,13 +80,13 @@ func crawl() error {
 	if err != nil {
 		return fmt.Errorf("failed to get current wd: %v", err)
 	}
-	dir := filepath.Join(pwd, "db", "historical")
+	dir := filepath.Join(pwd, "db", start.Format("2006"), start.Format("01"))
 	if err = os.MkdirAll(dir, os.ModeSticky|os.ModePerm); err != nil {
 		return fmt.Errorf("failed to create dir for json output: %v", err)
 	}
 
 	// Write JSON file
-	f, err := os.Create(filepath.Join(dir, start.Format("20060102")+".json"))
+	f, err := os.Create(filepath.Join(dir, start.Format("02")+".json"))
 	if err != nil {
 		return fmt.Errorf("failed to open file to write json output: %v", err)
 	}

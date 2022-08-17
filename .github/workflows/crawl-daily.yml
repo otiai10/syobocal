@@ -29,4 +29,5 @@ jobs:
     - name: File check
       run: |
         pwd;
-        ls -la ./db/historical;
+        p=$(date '+%Y/%m');
+        ls -l ./db/${p};
