@@ -1,0 +1,32 @@
+name: Daily Update
+on:
+  workflow_dispatch:
+  schedule:
+    # 4:00AM every day
+    - cron: '0 19 * * *'
+
+jobs:
+  daily-update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Event check
+      run: echo ${{ github.event_name }}
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        ref: main
+        fetch-depth: 0
+    - name: Set up Go
+      uses: actions/setup-go@v1
+      with:
+        go-version: '1.18'
+    - name: Get dependencies
+      run: go get -v -t -d ./...
+    - name: Build bin
+      run: go build -v -o run ./crawler
+    - name: Run crawler
+      run: ./run
+    - name: File check
+      run: |
+        pwd;
+        ls -la ./db/historical;
