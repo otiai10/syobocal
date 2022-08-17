@@ -31,3 +31,17 @@ jobs:
         pwd;
         p=$(date '+%Y/%m');
         ls -l ./db/${p};
+
+    - name: Dump if workflow_dispatch
+      if: ${{ github.event_name == 'workflow_dispatch' }}
+      run: |
+        p=$(date '+%Y/%m/%d.json');
+        cat ./db/${p};
+
+    - name: Commit
+      if: ${{ github.event_name != 'workflow_dispatch' }}
+      run: |
+        d=$(date '+%Y-%m-%d');
+        git add .;
+        git commit -m "Update: ${d}";
+        git push origin main;
