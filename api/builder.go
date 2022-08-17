@@ -106,6 +106,9 @@ func (b *Builder) Build() url.Values {
 	if !b.lastUpdateTo.IsZero() {
 		lastupdate += b.lastUpdateTo.Format(queryTimeFormat)
 	}
+	if lastupdate != "-" {
+		query["LastUpdate"] = []string{lastupdate}
+	}
 
 	return query
 }
