@@ -48,8 +48,8 @@ func (t *Token) Type() string {
 }
 
 // ParseComment ...
-func ParseComment(raw string, parent *models.Anime) (*models.Info, error) {
-	info := new(models.Info)
+func ParseComment(raw string, parent models.Anime) (models.Info, error) {
+	info := models.Info{}
 	info.Staff = map[string][]string{}
 
 	// Parse sections to Token
@@ -87,7 +87,7 @@ func ParseComment(raw string, parent *models.Anime) (*models.Info, error) {
 	return info, nil
 }
 
-func createSong(t *Token, parent *models.Anime) models.Song {
+func createSong(t *Token, parent models.Anime) models.Song {
 	song := models.Song{
 		Anime: parent.Title,
 	}

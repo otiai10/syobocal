@@ -7,15 +7,14 @@ import (
 	"github.com/otiai10/syobocal/models"
 )
 
-// CreateAnimeListFromSyobocalResponse しょぼかるのレスポンスからAnimeレコードにする。
-func CreateAnimeListFromSyobocalResponse(res *api.TitleLookupResponse) ([]*models.Anime, error) {
+func ToAnimeListFromTitleLookup(res api.TitleLookupResponse) ([]models.Anime, error) {
 	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		return nil, err
 	}
-	animes := []*models.Anime{}
+	animes := []models.Anime{}
 	for _, item := range res.TitleItems.Items {
-		anime := &models.Anime{
+		anime := models.Anime{
 			TID:   item.TID,
 			Title: item.Title,
 		}
