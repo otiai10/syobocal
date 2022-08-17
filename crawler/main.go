@@ -27,8 +27,9 @@ func crawl() error {
 	if err != nil {
 		return fmt.Errorf("failed to load location: %v", err)
 	}
-	log.Println("Now:\t", time.Now())
-	_24HoursAgo := time.Now().In(tokyo).Add(-24 * time.Hour)
+	now := time.Now().In(tokyo)
+	log.Println("Now:\t", now)
+	_24HoursAgo := now.Add(-24 * time.Hour)
 	log.Println("24H Ago:\t", _24HoursAgo)
 	start := time.Date(
 		_24HoursAgo.Year(),
@@ -92,7 +93,9 @@ func crawl() error {
 	defer f.Close()
 	enc := json.NewEncoder(f)
 	enc.SetIndent("", "  ")
-	if err := enc.Encode(animes); err != nil {
+	enc.SetEscapeHTML(false)
+	history := History{Animes: animes, Context: Context{Time: now, Query: res.Request.URL.String(), Output: f.Name()}}
+	if err := enc.Encode(history); err != nil {
 		return fmt.Errorf("failed to encode struct to json file: %v", err)
 	}
 	log.Println("File:\t", f.Name())
