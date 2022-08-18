@@ -88,7 +88,9 @@ func ParseComment(raw string, parent models.Anime) (models.Info, error) {
 }
 
 func createSong(t *Token, parent models.Anime) models.Song {
-	song := models.Song{Anime: parent.AnimeEssential}
+	song := models.Song{
+		Anime: parent.Title,
+	}
 	matched := SongExpression.FindAllStringSubmatch(t.Header, -1)
 	for i, name := range SongExpression.SubexpNames() {
 		switch name {

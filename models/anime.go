@@ -2,17 +2,13 @@ package models
 
 import "time"
 
-type AnimeEssential struct {
-	TID   int    `json:"tid"` // しょぼかるにおけるTID
-	Title string `json:"title"`
-}
-
 // Anime DBにEncode/Decodeしたいので、なるべくプリミティブがいい。
 type Anime struct {
-	AnimeEssential `json:",inline"`
-	LastUpdated    time.Time `json:"last_updated"`
-	Episodes       []Episode `json:"episodes"`
-	Info           `json:",inline"`
+	TID         int       `json:"tid"` // しょぼかるにおけるTID
+	Title       string    `json:"title"`
+	LastUpdated time.Time `json:"last_updated"`
+	Episodes    []Episode `json:"episodes"`
+	Info        `json:",inline"`
 }
 
 // Info ...
@@ -26,15 +22,4 @@ type Info struct {
 type Episode struct {
 	Number string `json:"number"` // 1 | 1.5 | 1-3 | 総集編
 	Title  string `json:"title"`
-}
-
-// Song ...
-type Song struct {
-	Title    string         `json:"title"`
-	Label    string         `json:"label"`    // オープニングとかエンディングとか挿入歌とか
-	Words    []string       `json:"words"`    // 作詞
-	Music    []string       `json:"music"`    // 作曲
-	Composer []string       `json:"composer"` // 編曲
-	Singer   []string       `json:"singer"`   // 歌
-	Anime    AnimeEssential `json:"anime"`    // 親アニメ情報
 }
