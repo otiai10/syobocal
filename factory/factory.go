@@ -15,8 +15,7 @@ func ToAnimeListFromTitleLookup(res api.TitleLookupResponse) ([]models.Anime, er
 	animes := []models.Anime{}
 	for _, item := range res.TitleItems.Items {
 		anime := models.Anime{
-			TID:   item.TID,
-			Title: item.Title,
+			AnimeEssential: models.AnimeEssential{TID: item.TID, Title: item.Title},
 		}
 		info, err := ParseComment(item.Comment, anime)
 		if err != nil {
