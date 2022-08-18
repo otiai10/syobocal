@@ -1,9 +1,15 @@
 name: Daily Update
 on:
-  workflow_dispatch:
   schedule:
     # 4:00AM every day
     - cron: '0 19 * * *'
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Commit fetched files
+        type: boolean
+        required: false
+        default: false
 
 jobs:
   daily-update:
@@ -35,12 +41,14 @@ jobs:
     - name: Dump if workflow_dispatch
       if: ${{ github.event_name == 'workflow_dispatch' }}
       run: |
-        p=$(date '+%Y/%m/%d.json');
+        p=$(date --date='1 day ago' '+%Y/%m/%d.json');
         cat ./db/${p};
 
     - name: Commit
-      if: ${{ github.event_name != 'workflow_dispatch' }}
+      if: ${{ github.event_name == 'schedule' || inputs.commit }}
       run: |
+        git config --global user.email otiai10+ayanel-ci@gmail.com
+        git config --global user.name "Ayanel CI"
         d=$(date '+%Y-%m-%d');
         git add .;
         git commit -m "Update: ${d}";
