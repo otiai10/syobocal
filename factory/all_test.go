@@ -1,4 +1,4 @@
-package main
+package factory
 
 import (
 	"encoding/xml"
@@ -11,7 +11,6 @@ import (
 
 	"github.com/otiai10/marmoset"
 	"github.com/otiai10/syobocal/api"
-	"github.com/otiai10/syobocal/factory"
 
 	. "github.com/otiai10/mint"
 )
@@ -30,7 +29,7 @@ func TestScenario_001(t *testing.T) {
 	lookup := api.TitleLookupResponse{}
 	err = xml.NewDecoder(res.Body).Decode(&lookup)
 	Require(t, err).ToBe(nil)
-	animes, err := factory.ToAnimeListFromTitleLookup(lookup)
+	animes, err := ToAnimeListFromTitleLookup(lookup)
 	Expect(t, err).ToBe(nil)
 
 	Expect(t, animes).TypeOf("[]models.Anime")
@@ -41,7 +40,7 @@ func mockserver() *httptest.Server {
 	r.GET("/", func(w http.ResponseWriter, req *http.Request) {
 		switch req.URL.Query().Get("Command") {
 		case "TitleLookup":
-			f, err := os.Open(filepath.Join("testdata", "titlelookup_20220817.xml"))
+			f, err := os.Open(filepath.Join("../testdata", "titlelookup_20220817.xml"))
 			if err != nil {
 				panic(err)
 			}
