@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"encoding/xml"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,7 +13,17 @@ import (
 
 	"github.com/otiai10/syobocal/api"
 	"github.com/otiai10/syobocal/factory"
+	"github.com/otiai10/syobocal/models"
 )
+
+var (
+	dbpath string
+)
+
+func init() {
+	flag.StringVar(&dbpath, "db", "db", "dir path of database")
+	flag.Parse()
+}
 
 func main() {
 	if err := crawl(); err != nil {
@@ -80,7 +91,7 @@ func crawl() error {
 	if err != nil {
 		return fmt.Errorf("failed to get current wd: %v", err)
 	}
-	dir := filepath.Join(pwd, "db", start.Format("2006"), start.Format("01"))
+	dir := filepath.Join(pwd, dbpath, start.Format("2006"), start.Format("01"))
 	if err = os.MkdirAll(dir, os.ModeSticky|os.ModePerm); err != nil {
 		return fmt.Errorf("failed to create dir for json output: %v", err)
 	}
@@ -94,7 +105,7 @@ func crawl() error {
 	enc := json.NewEncoder(f)
 	enc.SetIndent("", "  ")
 	enc.SetEscapeHTML(false)
-	history := History{Animes: animes, Context: Context{Time: now, Query: res.Request.URL.String(), Output: f.Name()}}
+	history := models.History{Animes: animes, Context: models.Context{Time: now, Query: res.Request.URL.String(), Output: f.Name()}}
 	if err := enc.Encode(history); err != nil {
 		return fmt.Errorf("failed to encode struct to json file: %v", err)
 	}

@@ -1,14 +1,12 @@
-package main
+package models
 
 import (
 	"time"
-
-	"github.com/otiai10/syobocal/models"
 )
 
 type History struct {
-	Context Context        `json:"context"`
-	Animes  []models.Anime `json:"animes"`
+	Context Context `json:"context"`
+	Animes  []Anime `json:"animes"`
 }
 
 type Context struct {
