@@ -1,4 +1,4 @@
-package syobocal
+package main
 
 import (
 	"encoding/xml"
